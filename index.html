@@ -1,14 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Family Dashboard</title>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Family Dashboard</title>
+
+<style>
+
+body{
+
+font-family:Arial,sans-serif;
+
+background:#f4f6f8;
+
+margin:0;
+
+padding:20px;
+
+}
+
+h1{
+
+text-align:center;
+
+}
+
+.dashboard{
+
+display:grid;
+
+grid-template-columns:2fr 1fr;
+
+grid-template-rows:auto auto auto;
+
+gap:20px;
+
+}
+
+.panel{
+
+background:white;
+
+border-radius:12px;
+
+padding:20px;
+
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+
+min-height:150px;
+
+}
+
+.calendar{
+
+grid-row:span 2;
+
+}
+
+.weather{
+
+grid-column:span 2;
+
+text-align:center;
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>Hello Family!</h1>
+<h1>🏡 Family Dashboard</h1>
 
-<p>Our dashboard is coming soon.</p>
+<div class="dashboard">
+
+<div class="panel calendar">
+
+<h2>📅 Calendar</h2>
+
+</div>
+
+<div class="panel">
+
+<h2>✅ Today's Tasks</h2>
+
+</div>
+
+<div class="panel">
+
+<h2>🛒 Shopping List</h2>
+
+</div>
+
+<div class="panel">
+
+<h2>🍽️ Meal Planner</h2>
+
+</div>
+
+<div class="panel weather">
+
+<h2>🌤️ Weather</h2>
+
+</div>
+
+</div>
 
 </body>
+
 </html>
