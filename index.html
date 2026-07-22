@@ -7,7 +7,13 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Family Dashboard</title>
+<h1>Grubbins</h1>
+
+<p class="subtitle">
+
+At your service ❤️
+<p id="today"></p>
+</p>
 
 <style>
 
@@ -15,7 +21,7 @@ body{
 
 font-family:Arial,sans-serif;
 
-background:#f4f6f8;
+background:#eef3f7;
 
 margin:0;
 
@@ -27,8 +33,38 @@ h1{
 
 text-align:center;
 
-}
+font-size:42px;
 
+margin-bottom:5px;
+
+color:#2c3e50;
+
+}
+.subtitle{
+
+text-align:center;
+
+color:#7f8c8d;
+
+font-size:18px;
+
+margin-bottom:30px;
+
+}
+  #today{
+
+text-align:center;
+
+font-size:20px;
+
+font-weight:bold;
+
+margin-bottom:30px;
+
+color:#4b6584;
+
+}
+  
 .dashboard{
 
 display:grid;
@@ -37,7 +73,7 @@ grid-template-columns:2fr 1fr;
 
 grid-template-rows:auto auto auto;
 
-gap:20px;
+gap:25px;
 
 }
 
@@ -45,13 +81,15 @@ gap:20px;
 
 background:white;
 
-border-radius:12px;
+border-radius:18px;
 
-padding:20px;
+padding:22px;
 
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
 
-min-height:150px;
+min-height:170px;
+
+transition:0.3s;
 
 }
 
@@ -70,9 +108,29 @@ text-align:center;
 }
 
 </style>
+h2{
 
+margin-top:0;
+
+color:#34495e;
+
+font-size:24px;
+
+}
+  
 </head>
+<script>
 
+const today = new Date();
+
+document.getElementById("today").innerHTML =
+today.toLocaleDateString("en-GB",{
+weekday:"long",
+day:"numeric",
+month:"long"
+});
+
+</script>
 <body>
 
 <h1>🏡 Family Dashboard</h1>
