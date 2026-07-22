@@ -14,10 +14,7 @@ function updateClock(){
         hour:"2-digit",
         minute:"2-digit"
     });
-
-}
-
-updateClock();
+    
 const hour = now.getHours();
 
 let greeting = "";
@@ -33,4 +30,9 @@ else{
 }
 
 document.getElementById("message").innerHTML = greeting;
+
+}
+
+updateClock();
+
 setInterval(updateClock,1000);
