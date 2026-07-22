@@ -12,12 +12,25 @@ function updateClock(){
     document.getElementById("clock").innerHTML =
     now.toLocaleTimeString("en-GB",{
         hour:"2-digit",
-        minute:"2-digit",
-        second:"2-digit"
+        minute:"2-digit"
     });
 
 }
 
 updateClock();
+const hour = now.getHours();
 
+let greeting = "";
+
+if(hour < 12){
+    greeting = "☀️ Good morgon!";
+}
+else if(hour < 18){
+    greeting = "🌤️ God afton!";
+}
+else{
+    greeting = "🌙 God kväll!";
+}
+
+document.getElementById("message").innerHTML = greeting;
 setInterval(updateClock,1000);
