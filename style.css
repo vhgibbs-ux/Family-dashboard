@@ -110,3 +110,35 @@ h2{
     font-weight:bold;
     margin-top:25px;
 }
+
+/* =========================
+   Tasks
+========================= */
+
+#taskInput{
+
+    width:70%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:16px;
+
+}
+
+button{
+
+    padding:10px 15px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#4b6584;
+    color:white;
+    font-size:15px;
+
+}
+
+button:hover{
+
+    background:#34495e;
+
+}
