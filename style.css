@@ -74,7 +74,7 @@ h2{
 .dashboard{
     display:grid;
     grid-template-columns:2fr 1fr;
-    grid-template-rows:auto auto auto;
+    grid-auto-rows:minmax(140px, auto);
     gap:25px;
 }
 
