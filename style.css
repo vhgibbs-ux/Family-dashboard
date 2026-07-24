@@ -42,6 +42,13 @@ h1{
     margin-bottom:30px;
 }
 
+#bin{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-top:25px;
+}
+
 h2{
     margin-top:0;
     color:#34495e;
