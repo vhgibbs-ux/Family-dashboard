@@ -1,94 +1,132 @@
-/* ==========================================
-   Grubbins Family Dashboard
-   script.js
+<!DOCTYPE html>
+<html lang="en">
 
-   Controls the live information shown on the
-   dashboard.
+<head>
 
-   Last updated: Session 7
-========================================== */
+    <meta charset="UTF-8">
 
-function updateClock(){
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    // =========================
-    // Current date and time
-    // =========================
+    <title>Grubbins</title>
 
-    const now = new Date();
+    <link rel="stylesheet" href="style.css">
 
+</head>
 
-    // =========================
-    // Update today's date
-    // =========================
+<body>
 
-    document.getElementById("today").innerHTML =
-    now.toLocaleDateString("en-GB",{
-        weekday:"long",
-        day:"numeric",
-        month:"long"
-    });
+    <!-- =========================
+         Header
+    ========================== -->
 
+    <h1>Grubbins</h1>
 
-    // =========================
-    // Update the clock
-    // =========================
+    <p class="subtitle">
+        At your service ❤️
+    </p>
 
-    document.getElementById("clock").innerHTML =
-    now.toLocaleTimeString("en-GB",{
-        hour:"2-digit",
-        minute:"2-digit"
-    });
+    <p id="today"></p>
+
+    <p id="clock"></p>
+
+    <p id="message"></p>
 
 
-    // =========================
-    // Choose a greeting
-    // =========================
+    <!-- =========================
+         Dashboard
+    ========================== -->
 
-    const hour = now.getHours();
+    <div class="dashboard">
 
-    let greeting = "";
+        <!-- Today's Events -->
 
-    if(hour < 12){
-        greeting = "☀️ God morgon!";
-    }
-    else if(hour < 18){
-        greeting = "🌤️ God afton!";
-    }
-    else{
-        greeting = "🌙 God kväll!";
-    }
+        <div class="panel today">
 
+            <h2>📅 Today</h2>
 
-    // =========================
-    // Bin reminder
-    // (Temporary placeholder)
-    // =========================
+            <ul id="today-events">
+                <li>09:00 Dentist</li>
+                <li>15:30 Football</li>
+                <li>19:00 Scouts</li>
+            </ul>
 
-    const bin = document.getElementById("bin");
-
-    if (bin){
-        bin.innerHTML = "⬛ Black Bin<br><small>Collection Monday</small>";
-    }
+        </div>
 
 
-    // =========================
-    // Display the greeting
-    // =========================
+        <!-- This Week -->
 
-    document.getElementById("message").innerHTML = greeting;
+        <div class="panel week">
 
-}
+            <h2>📆 This Week</h2>
+
+            <ul id="week-events">
+                <li>Tuesday – Piano</li>
+                <li>Wednesday – Parents' Evening</li>
+                <li>Friday – Pizza Night 🍕</li>
+            </ul>
+
+        </div>
 
 
-// =========================
-// Start Grubbins
-// =========================
+        <!-- Tasks -->
 
-updateClock();
+        <div class="panel">
+
+            <h2>✅ Today's Tasks</h2>
+
+        </div>
 
 
-// =========================
-// Refresh every second
-// =========================
+        <!-- Birthdays -->
 
-setInterval(updateClock,1000);
+        <div class="panel birthdays">
+
+            <h2>🎂 Upcoming Birthdays</h2>
+
+            <ul id="birthdays">
+                <li>4 Aug – Grandma</li>
+                <li>10 Aug – Ben</li>
+                <li>18 Aug – Sophie</li>
+            </ul>
+
+        </div>
+
+
+        <!-- Shopping -->
+
+        <div class="panel">
+
+            <h2>🛒 Shopping List</h2>
+
+        </div>
+
+
+        <!-- Meals -->
+
+        <div class="panel">
+
+            <h2>🍽️ Meal Planner</h2>
+
+        </div>
+
+
+        <!-- Weather -->
+
+        <div class="panel weather">
+
+            <h2>🌤️ Weather</h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JavaScript
+    ========================== -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
