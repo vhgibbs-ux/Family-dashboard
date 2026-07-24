@@ -29,6 +29,9 @@ else{
     greeting = "🌙 God kväll!";
 }
 
+document.getElementById("bin").innerHTML =
+"⬛ Black Bin";
+    
 document.getElementById("message").innerHTML = greeting;
 
 }
