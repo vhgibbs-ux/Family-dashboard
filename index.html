@@ -1,132 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
+/* ==========================================
+   Grubbins Family Dashboard
+   script.js
 
-<head>
+   Controls the live information shown on the
+   dashboard.
 
-    <meta charset="UTF-8">
+   Last updated: Session 7
+========================================== */
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+function updateClock(){
 
-    <title>Grubbins</title>
+    // =========================
+    // Current date and time
+    // =========================
 
-    <link rel="stylesheet" href="style.css">
-
-</head>
-
-<body>
-
-    <!-- =========================
-         Header
-    ========================== -->
-
-    <h1>Grubbins</h1>
-
-    <p class="subtitle">
-        At your service ❤️
-    </p>
-
-    <p id="today"></p>
-
-    <p id="clock"></p>
-
-    <p id="message"></p>
+    const now = new Date();
 
 
-    <!-- =========================
-         Dashboard
-    ========================== -->
+    // =========================
+    // Update today's date
+    // =========================
 
-    <div class="dashboard">
-
-        <!-- Today's Events -->
-
-        <div class="panel today">
-
-            <h2>📅 Today</h2>
-
-            <ul id="today-events">
-                <li>09:00 Dentist</li>
-                <li>15:30 Football</li>
-                <li>19:00 Scouts</li>
-            </ul>
-
-        </div>
+    document.getElementById("today").innerHTML =
+    now.toLocaleDateString("en-GB",{
+        weekday:"long",
+        day:"numeric",
+        month:"long"
+    });
 
 
-        <!-- This Week -->
+    // =========================
+    // Update the clock
+    // =========================
 
-        <div class="panel week">
-
-            <h2>📆 This Week</h2>
-
-            <ul id="week-events">
-                <li>Tuesday – Piano</li>
-                <li>Wednesday – Parents' Evening</li>
-                <li>Friday – Pizza Night 🍕</li>
-            </ul>
-
-        </div>
+    document.getElementById("clock").innerHTML =
+    now.toLocaleTimeString("en-GB",{
+        hour:"2-digit",
+        minute:"2-digit"
+    });
 
 
-        <!-- Tasks -->
+    // =========================
+    // Choose a greeting
+    // =========================
 
-        <div class="panel">
+    const hour = now.getHours();
 
-            <h2>✅ Tasks</h2>
+    let greeting = "";
 
-        </div>
-
-
-        <!-- Birthdays -->
-
-        <div class="panel birthdays">
-
-            <h2>🎂 Upcoming Birthdays</h2>
-
-            <ul id="birthdays">
-                <li>4 Aug – Grandma</li>
-                <li>10 Aug – Ben</li>
-                <li>18 Aug – Sophie</li>
-            </ul>
-
-        </div>
+    if(hour < 12){
+        greeting = "☀️ God morgon!";
+    }
+    else if(hour < 18){
+        greeting = "🌤️ God afton!";
+    }
+    else{
+        greeting = "🌙 God kväll!";
+    }
 
 
-        <!-- Shopping -->
+    // =========================
+    // Bin reminder
+    // (Temporary placeholder)
+    // =========================
 
-        <div class="panel">
+    const bin = document.getElementById("bin");
 
-            <h2>🛒 Shopping List</h2>
-
-        </div>
-
-
-        <!-- Meals -->
-
-        <div class="panel">
-
-            <h2>🍽️ Meal Planner</h2>
-
-        </div>
+    if (bin){
+        bin.innerHTML = "⬛ Black Bin<br><small>Collection Monday</small>";
+    }
 
 
-        <!-- Weather -->
+    // =========================
+    // Display the greeting
+    // =========================
 
-        <div class="panel weather">
+    document.getElementById("message").innerHTML = greeting;
 
-            <h2>🌤️ Weather</h2>
-
-        </div>
-
-    </div>
+}
 
 
-    <!-- =========================
-         JavaScript
-    ========================== -->
+// =========================
+// Start Grubbins
+// =========================
 
-    <script src="script.js"></script>
+updateClock();
 
-</body>
 
-</html>
+// =========================
+// Refresh every second
+// =========================
+
+setInterval(updateClock,1000);
