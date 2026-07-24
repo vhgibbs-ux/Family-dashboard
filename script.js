@@ -30,7 +30,7 @@ else{
 }
 
 document.getElementById("bin").innerHTML =
-"⬛ Black Bin";
+"⬛ Black Bin<br><small>Collection Monday</small>";
     
 document.getElementById("message").innerHTML = greeting;
 
