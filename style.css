@@ -1,3 +1,7 @@
+/* =========================
+   Page
+========================= */
+
 body{
     font-family: Arial, sans-serif;
     background:#dde8f2;
@@ -5,6 +9,9 @@ body{
     padding:20px;
 }
 
+/* =========================
+   Header
+========================= */
 h1{
     text-align:center;
     font-size:42px;
@@ -42,6 +49,10 @@ h1{
     margin-bottom:30px;
 }
 
+/* =========================
+   Dashboard
+========================= */
+
 #bin{
     text-align:center;
     font-size:28px;
@@ -49,11 +60,16 @@ h1{
     margin-top:25px;
 }
 
+/* =========================
+   Panel Headings
+========================= */
+
 h2{
     margin-top:0;
     color:#34495e;
     font-size:24px;
 }
+
 
 .dashboard{
     display:grid;
@@ -70,6 +86,10 @@ h2{
     min-height:170px;
     transition:0.3s;
 }
+
+/* =========================
+   Individual Panels
+========================= */
 
 .calendar{
     grid-row:span 2;
