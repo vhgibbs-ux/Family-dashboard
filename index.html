@@ -3,114 +3,129 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Grubbins</title>
+    <title>Grubbins</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<h1>Grubbins</h1>
+    <!-- =========================
+         Header
+    ========================== -->
 
-<p class="subtitle">
-At your service ❤️
-</p>
+    <h1>Grubbins</h1>
 
-<p id="today"></p>
-    
-<p id="clock"></p>
+    <p class="subtitle">
+        At your service ❤️
+    </p>
 
-<p id="message"></p>
+    <p id="today"></p>
 
-<!-- Dashboard -->
-    
-<div class="dashboard">
+    <p id="clock"></p>
 
-<!-- Calendar -->
+    <p id="message"></p>
 
-<div class="panel today">
 
-    <h2>📅 Today</h2>
+    <!-- =========================
+         Dashboard
+    ========================== -->
 
-    <ul id="today-events">
-      <ul id="today-events">
+    <div class="dashboard">
 
-<li>09:00 Dentist</li>
+        <!-- Today's Events -->
 
-<li>15:30 Football</li>
+        <div class="panel today">
 
-<li>19:00 Scouts</li>
+            <h2>📅 Today</h2>
 
-    </ul>
+            <ul id="today-events">
+                <li>09:00 Dentist</li>
+                <li>15:30 Football</li>
+                <li>19:00 Scouts</li>
+            </ul>
 
-</div>
+        </div>
 
-<div class="panel week">
 
-    <h2>📆 This Week</h2>
+        <!-- This Week -->
 
-    <ul id="week-events">
-    <li>Tuesday – Piano</li>
+        <div class="panel week">
 
-<li>Wednesday – Parents' Evening</li>
+            <h2>📆 This Week</h2>
 
-<li>Friday – Pizza Night 🍕</li>
+            <ul id="week-events">
+                <li>Tuesday – Piano</li>
+                <li>Wednesday – Parents' Evening</li>
+                <li>Friday – Pizza Night 🍕</li>
+            </ul>
 
-</ul>
+        </div>
 
-</div>
-<div class="panel birthdays">
 
-    <h2>🎂 Birthdays</h2>
+        <!-- Tasks -->
 
-    <ul id="birthdays">
-     <li>4 Aug – Grandma</li>
+        <div class="panel">
 
-<li>10 Aug – Ben</li>
+            <h2>✅ Tasks</h2>
 
-<li>18 Aug – Sophie</li>
+        </div>
 
-</ul>
 
-</div>
+        <!-- Birthdays -->
 
-<!-- Tasks -->
-    <div class="panel">
-        <h2>✅ Today's Tasks</h2>
+        <div class="panel birthdays">
+
+            <h2>🎂 Upcoming Birthdays</h2>
+
+            <ul id="birthdays">
+                <li>4 Aug – Grandma</li>
+                <li>10 Aug – Ben</li>
+                <li>18 Aug – Sophie</li>
+            </ul>
+
+        </div>
+
+
+        <!-- Shopping -->
+
+        <div class="panel">
+
+            <h2>🛒 Shopping List</h2>
+
+        </div>
+
+
+        <!-- Meals -->
+
+        <div class="panel">
+
+            <h2>🍽️ Meal Planner</h2>
+
+        </div>
+
+
+        <!-- Weather -->
+
+        <div class="panel weather">
+
+            <h2>🌤️ Weather</h2>
+
+        </div>
+
     </div>
 
-  <!-- Shopping -->
-    <div class="panel">
-        <h2>🛒 Shopping List</h2>
-    </div>
 
-<!-- Bin Reminder -->
-<div class="panel">
+    <!-- =========================
+         JavaScript
+    ========================== -->
 
-    <h2>🗑️ Bin Reminder</h2>
-
-    <p id="bin"></p>
-
-</div>
-    
-    <div class="panel">
-        <h2>🍽️ Meal Planner</h2>
-    </div>
-
-    <div class="panel weather">
-        <h2>🌤️ Weather</h2>
-    </div>
-
-</div>
-
-<!-- JavaScript -->
-    
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 
