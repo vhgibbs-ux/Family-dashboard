@@ -92,3 +92,65 @@ updateClock();
 // =========================
 
 setInterval(updateClock,1000);
+
+// =========================
+// Tasks
+// =========================
+
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function saveTasks(){
+
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+
+}
+
+function renderTasks(){
+
+    const list = document.getElementById("taskList");
+
+    list.innerHTML = "";
+
+    tasks.forEach((task,index)=>{
+
+        const li = document.createElement("li");
+
+        li.innerHTML =
+        `<input type="checkbox"
+        onchange="toggleTask(${index})">
+
+        ${task}`;
+
+        list.appendChild(li);
+
+    });
+
+}
+
+function addTask(){
+
+    const input = document.getElementById("taskInput");
+
+    if(input.value.trim() === "") return;
+
+    tasks.push(input.value);
+
+    input.value="";
+
+    saveTasks();
+
+    renderTasks();
+
+}
+
+function toggleTask(index){
+
+    tasks.splice(index,1);
+
+    saveTasks();
+
+    renderTasks();
+
+}
+
+renderTasks();
