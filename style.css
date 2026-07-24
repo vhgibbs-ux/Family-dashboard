@@ -87,6 +87,17 @@ h2{
     transition:0.3s;
 }
 
+.panel ul{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.panel li{
+    padding:6px 0;
+    border-bottom:1px solid #ecf0f1;
+}
+
 /* =========================
    Individual Panels
 ========================= */
