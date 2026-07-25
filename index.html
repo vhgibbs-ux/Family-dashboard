@@ -72,18 +72,28 @@
 
    <div class="panel">
 
-    <h2>✅ Tasks</h2>
+   <h2>✅ Family Tasks</h2>
 
-    <input
-        type="text"
-        id="taskInput"
-        placeholder="Add a task">
+<input
+    type="text"
+    id="taskInput"
+    placeholder="New task">
 
-    <button onclick="addTask()">
-        Add
-    </button>
+<select id="taskOwner">
 
-    <ul id="taskList"></ul>
+    <option value="Everyone">Everyone</option>
+    <option value="Mum">Mum</option>
+    <option value="Dad">Dad</option>
+    <option value="Emily">Emily</option>
+    <option value="Ben">Ben</option>
+
+</select>
+
+<button onclick="addTask()">
+    Add
+</button>
+
+<ul id="taskList"></ul>
 
 </div>
 
