@@ -119,7 +119,9 @@ function renderTasks(){
         `<input type="checkbox"
         onchange="toggleTask(${index})">
 
-        ${task}`;
+        <strong>${task.owner}</strong><br>
+
+${task.text};
 
         list.appendChild(li);
 
@@ -133,7 +135,15 @@ function addTask(){
 
     if(input.value.trim() === "") return;
 
-    tasks.push(input.value);
+    const owner =
+document.getElementById("taskOwner").value;
+
+tasks.push({
+
+    text: input.value,
+    owner: owner
+
+});
 
     input.value="";
 
