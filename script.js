@@ -139,11 +139,9 @@ function renderTasks(){
 
 function addTask(){
 
+    alert("addTask is running!");
+
     const input = document.getElementById("taskInput");
-
-    if(input.value.trim() === "") return;
-
-    const owner =
 document.getElementById("taskOwner").value;
 
 tasks.push({
