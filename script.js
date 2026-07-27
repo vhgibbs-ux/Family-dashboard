@@ -98,6 +98,15 @@ setInterval(updateClock,1000);
 // =========================
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+const familyIcons = {
+
+    "Everyone":"🤍",
+    "Mummm":"❤️",
+    "Dad":"💙",
+    "Elizabeth":"🩵",
+    "Markus":"💛"
+
+};
 
 function saveTasks(){
 
@@ -119,9 +128,9 @@ function renderTasks(){
         `<input type="checkbox"
         onchange="toggleTask(${index})">
 
-        <strong>${task.owner}</strong><br>
+        <strong>${familyIcons[task.owner]} ${task.owner}</strong><br>
 
-${task.text};
+${task.text}
 
         list.appendChild(li);
 
