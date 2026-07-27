@@ -4,7 +4,6 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Grubbins</title>
@@ -15,152 +14,156 @@
 
 <body>
 
-    <!-- =========================
-         Header
-    ========================== -->
-
-
+<div class="dashboard">
 
     <!-- =========================
-         Dashboard
+         Welcome
     ========================== -->
 
-    <div class="dashboard">
-  
+    <div class="panel welcome-panel">
+
+        <h1>Grubbins</h1>
+
+        <p class="subtitle">
+            At your service ❤️
+        </p>
+
+        <p id="today"></p>
+
+        <p id="clock"></p>
+
+        <p id="message"></p>
+
+    </div>
+
+
+    <!-- =========================
+         Today
+    ========================== -->
+
     <div class="panel today-panel">
 
         <h2>📅 Today</h2>
 
-        <p>Calendar events will appear here soon.</p>
-
-    </div>
-
-</div>
-        <!-- Today's Events -->
-
-        <div class="panel today">
-
-            <h2>📅 Today</h2>
-
-            <ul id="today-events">
-                <li>09:00 Work</li>
-                <li>12:30 Lunch</li>
-                <li>19:00 Bedtime</li>
-            </ul>
-
-        </div>
-
-
-        <!-- This Week -->
-
-        <div class="panel week">
-
-            <h2>📆 This Week</h2>
-
-            <ul id="week-events">
-                <li>Tuesday – Piano</li>
-                <li>Wednesday – Parents' Evening</li>
-                <li>Friday – Pizza Night 🍕</li>
-            </ul>
-
-        </div>
-
-
-        <!-- Tasks -->
-
-   <div class="panel">
-
-   <h2>✅ Family Tasks</h2>
-
-<input
-    type="text"
-    id="taskInput"
-    placeholder="New task">
-
-<select id="taskOwner">
-
-    <option value="Everyone">Everyone</option>
-    <option value="Mummm">Mummm</option>
-    <option value="Dad">Dad</option>
-    <option value="Elizabeth">Elizabeth</option>
-    <option value="Markus">Markus</option>
-
-</select>
-
-<button onclick="addTask()">
-    Add
-</button>
-
-<ul id="taskList"></ul>
-
-</div>
-
-<div class="panel missions">
-
-    <h2>⭐ Today's Missions</h2>
-
-    <ul id="missionList">
-
-        <li>❤️ Make bed</li>
-
-        <li>💙 Empty dishwasher</li>
-
-        <li>🩵 Reading (10 mins)</li>
-
-        <li>💛 Feed the guinea pigs</li>
-
-    </ul>
-
-</div>
-        <!-- Birthdays -->
-
-        <div class="panel birthdays">
-
-            <h2>🎂 Upcoming Birthdays</h2>
-
-            <ul id="birthdays">
-                <li>4 Aug – Grandma</li>
-                <li>10 Aug – Ben</li>
-                <li>18 Aug – Sophie</li>
-            </ul>
-
-        </div>
-
-
-        <!-- Shopping -->
-
-        <div class="panel">
-
-            <h2>🛒 Shopping List</h2>
-
-        </div>
-
-
-        <!-- Meals -->
-
-        <div class="panel">
-
-            <h2>🍽️ Meal Planner</h2>
-
-        </div>
-
-
-        <!-- Weather -->
-
-        <div class="panel weather">
-
-            <h2>🌤️ Weather</h2>
-
-        </div>
+        <ul id="today-events"></ul>
 
     </div>
 
 
     <!-- =========================
-         JavaScript
+         Missions
     ========================== -->
 
-    <script src="script.js"></script>
+    <div class="panel missions">
+
+        <h2>⭐ Today's Missions</h2>
+
+        <ul id="missionList">
+
+            <li>❤️ Make bed</li>
+            <li>💙 Empty dishwasher</li>
+            <li>🩵 Reading (10 mins)</li>
+            <li>💛 Feed the guinea pigs</li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- =========================
+         Family Tasks
+    ========================== -->
+
+    <div class="panel">
+
+        <h2>✅ Family Tasks</h2>
+
+        <input
+            type="text"
+            id="taskInput"
+            placeholder="New task">
+
+        <select id="taskOwner">
+
+            <option value="Everyone">🤍 Everyone</option>
+            <option value="Mummm">❤️ Mummm</option>
+            <option value="Dad">💙 Dad</option>
+            <option value="Elizabeth">🩵 Elizabeth</option>
+            <option value="Markus">💛 Markus</option>
+
+        </select>
+
+        <button onclick="addTask()">
+            Add
+        </button>
+
+        <ul id="taskList"></ul>
+
+    </div>
+
+
+    <!-- =========================
+         This Week
+    ========================== -->
+
+    <div class="panel week">
+
+        <h2>📆 This Week</h2>
+
+        <ul id="week-events"></ul>
+
+    </div>
+
+
+    <!-- =========================
+         Birthdays
+    ========================== -->
+
+    <div class="panel birthdays">
+
+        <h2>🎂 Upcoming Birthdays</h2>
+
+        <ul id="birthdays"></ul>
+
+    </div>
+
+
+    <!-- =========================
+         Shopping
+    ========================== -->
+
+    <div class="panel">
+
+        <h2>🛒 Shopping List</h2>
+
+    </div>
+
+
+    <!-- =========================
+         Meals
+    ========================== -->
+
+    <div class="panel">
+
+        <h2>🍽️ Meal Planner</h2>
+
+    </div>
+
+
+    <!-- =========================
+         Weather
+    ========================== -->
+
+    <div class="panel weather">
+
+        <h2>🌤️ Weather</h2>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
 
