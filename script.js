@@ -139,11 +139,11 @@ function renderTasks(){
 
 function addTask(){
 
-    alert("addTask is running!");
+const input = document.getElementById("taskInput");
+const owner = document.getElementById("taskOwner").value;
 
-    const input = document.getElementById("taskInput");
-document.getElementById("taskOwner").value;
-
+if (input.value.trim() === "") return;
+   
 tasks.push({
 
     text: input.value,
@@ -152,6 +152,7 @@ tasks.push({
 });
 
     input.value="";
+
 
     saveTasks();
 
