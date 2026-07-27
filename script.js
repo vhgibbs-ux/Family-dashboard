@@ -130,7 +130,7 @@ function renderTasks(){
 
         <strong>${familyIcons[task.owner]} ${task.owner}</strong><br>
 
-${task.text}
+${task.text}`
 
         list.appendChild(li);
 
