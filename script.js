@@ -122,20 +122,19 @@ function renderTasks(){
 
     tasks.forEach((task,index)=>{
 
-        const li = document.createElement("li");
+    const li = document.createElement("li");
 
-        li.innerHTML =
-        `<input type="checkbox"
-        onchange="toggleTask(${index})">
+    li.innerHTML =
+    `<input type="checkbox"
+    onchange="toggleTask(${index})">
 
-        <strong>${familyIcons[task.owner]} ${task.owner}</strong><br>
+    <strong>${familyIcons[task.owner]} ${task.owner}</strong><br>
 
-${task.text}`
+    ${task.text}`;
 
-        list.appendChild(li);
+    list.appendChild(li);
 
-    });
-
+});
 }
 
 function addTask(){
