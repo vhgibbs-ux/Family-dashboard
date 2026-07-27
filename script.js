@@ -5,7 +5,7 @@
    Controls the live information shown on the
    dashboard.
 
-   Last updated: Session 7
+   VERSION 27 JULY - TEST
 ========================================== */
 
 function updateClock(){
