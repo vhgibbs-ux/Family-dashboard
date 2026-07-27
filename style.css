@@ -177,3 +177,25 @@ button:hover{
     padding:10px 0;
 
 }
+/* =========================
+   Top Row
+========================= */
+
+.top-row{
+
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    gap:25px;
+
+}
+
+
+.welcome-panel{
+
+    background:white;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.08);
+    text-align:center;
+
+}
