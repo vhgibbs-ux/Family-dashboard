@@ -127,6 +127,13 @@ h2{
     height:120px;
 
 }
+.status-art img{
+
+    width:100%;
+    height:auto;
+    display:block;
+
+}
 
 /* =========================
    Individual Panel Tweaks
