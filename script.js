@@ -29,10 +29,49 @@ async function loadCalendar() {
         }
       }
     );
+function displayCalendar(data) {
 
+  const container = document.getElementById("calendar-events");
+
+  if (!container) {
+    console.error("Calendar container not found");
+    return;
+  }
+
+  const events = data.items || [];
+
+  if (events.length === 0) {
+    container.innerHTML = "No upcoming events 🎉";
+    return;
+  }
+
+  container.innerHTML = events.map(event => {
+
+    const start = event.start.dateTime
+      ? new Date(event.start.dateTime).toLocaleTimeString(
+          "en-GB",
+          {
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        )
+      : "All day";
+
+    return `
+      <div class="calendar-event">
+        <strong>${start}</strong>
+        ${event.summary}
+      </div>
+    `;
+
+  }).join("");
+
+}
     const data = await response.json();
 
  window.grubbinsCalendar = data;
+window.grubbinsCalendar = data;
+displayCalendar(data);
 console.log("Calendar loaded:", data);
 
   } catch (err) {
