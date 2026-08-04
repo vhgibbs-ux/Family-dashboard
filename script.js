@@ -32,7 +32,8 @@ async function loadCalendar() {
 
     const data = await response.json();
 
-    console.log("Calendar data:", data);
+ window.grubbinsCalendar = data;
+console.log("Calendar loaded:", data);
 
   } catch (err) {
 
