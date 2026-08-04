@@ -31,7 +31,7 @@ async function loadCalendar() {
     );
 function displayCalendar(data) {
 
-  const container = document.getElementById("calendar-events");
+  const container = document.getElementById("today-events");
 
   if (!container) {
     console.error("Calendar container not found");
@@ -58,12 +58,12 @@ function displayCalendar(data) {
       : "All day";
 
     return `
-      <div class="calendar-event">
-        <strong>${start}</strong>
-        ${event.summary}
-      </div>
-    `;
-
+  <li class="calendar-event">
+    <strong>${start}</strong>
+    ${event.summary}
+  </li>
+`;
+     
   }).join("");
 
 }
