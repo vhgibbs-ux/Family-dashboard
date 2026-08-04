@@ -31,45 +31,73 @@ async function loadCalendar() {
     );
 function displayCalendar(data) {
 
-  const container = document.getElementById("today-events");
-
-  if (!container) {
-    console.error("Calendar container not found");
-    return;
-  }
+  const todayContainer = document.getElementById("today-events");
+  const weekContainer = document.getElementById("week-events");
 
   const events = data.items || [];
 
-  if (events.length === 0) {
-    container.innerHTML = "No upcoming events 🎉";
-    return;
-  }
+  const today = new Date().toDateString();
 
-  container.innerHTML = events.map(event => {
+  const todayEvents = events.filter(event => {
 
-    const start = event.start.dateTime
-      ? new Date(event.start.dateTime).toLocaleTimeString(
-          "en-GB",
-          {
-            hour: "2-digit",
-            minute: "2-digit"
-          }
-        )
-      : "All day";
+    if (!event.start.dateTime) {
+      return false;
+    }
 
-    return `
-  <li class="calendar-event">
-    <strong>${start}</strong>
-    ${event.summary}
-  </li>
-`;
-     
-  }).join("");
+    return new Date(event.start.dateTime).toDateString() === today;
+
+  });
+
+  const renderEvents = (container, eventList, emptyMessage) => {
+
+    if (!container) return;
+
+    if (eventList.length === 0) {
+      container.innerHTML = `<li>${emptyMessage}</li>`;
+      return;
+    }
+
+    container.innerHTML = eventList.map(event => {
+
+      const start = event.start.dateTime
+        ? new Date(event.start.dateTime).toLocaleTimeString(
+            "en-GB",
+            {
+              hour: "2-digit",
+              minute: "2-digit"
+            }
+          )
+        : "All day";
+
+      return `
+        <li class="calendar-event">
+          <strong>${start}</strong>
+          ${event.summary}
+        </li>
+      `;
+
+    }).join("");
+
+  };
+
+
+  renderEvents(
+    todayContainer,
+    todayEvents,
+    "No events today 🎉"
+  );
+
+
+  renderEvents(
+    weekContainer,
+    events,
+    "No upcoming events"
+  );
 
 }
     const data = await response.json();
 
- window.grubbinsCalendar = data;
+
 window.grubbinsCalendar = data;
 displayCalendar(data);
 console.log("Calendar loaded:", data);
