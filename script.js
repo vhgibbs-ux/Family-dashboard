@@ -8,6 +8,40 @@
    VERSION 27 JULY - TEST
 ========================================== */
 
+// ================================
+// Grubbins Configuration
+// ================================
+
+const GRUBBINS = {
+  CORE_URL: "https://grubbins-core.v-h-gibbs.workers.dev",
+  API_KEY: "ErasmusFamilj04"
+};
+
+async function loadCalendar() {
+
+  try {
+
+    const response = await fetch(
+      `${GRUBBINS.CORE_URL}/calendar`,
+      {
+        headers: {
+          "X-Grubbins-Key": GRUBBINS.API_KEY
+        }
+      }
+    );
+
+    const data = await response.json();
+
+    console.log("Calendar data:", data);
+
+  } catch (err) {
+
+    console.error("Calendar error:", err);
+
+  }
+
+}
+
 function updateClock(){
 
     // =========================
@@ -92,6 +126,7 @@ updateClock();
 // =========================
 
 setInterval(updateClock,1000);
+loadCalendar();
 
 // =========================
 // Tasks
