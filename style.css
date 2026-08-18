@@ -71,30 +71,45 @@ h2{
     align-items:start;
 }
 
+/* =========================
+   Generic Panels
+========================= */
+
 .panel{
+
+    background:white;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+
+    transition:0.2s;
+
+}
+
 .panel:hover{
 
     transform:translateY(-3px);
 
 }
-   background:white;
-    border-radius:18px;
-    padding:22px;
-    box-shadow:0 6px 20px rgba(0,0,0,0.08);
-    min-height:170px;
-    transition:0.3s;
-}
 
 .panel ul{
+
     list-style:none;
     padding:0;
     margin:0;
+
 }
 
 .panel li{
+
     padding:6px 0;
     border-bottom:1px solid #ecf0f1;
+
 }
+
+/* =========================
+   Today Panel
+========================= */
 
 .today-panel{
 
@@ -102,6 +117,38 @@ h2{
 
 }
 
+.panel-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+.bin{
+
+    width:24px;
+    height:24px;
+
+    border-radius:6px;
+
+    border:2px solid rgba(255,255,255,.25);
+
+    flex-shrink:0;
+
+}
+
+.bin.black{
+
+    background:#222;
+
+}
+
+.bin.blue{
+
+    background:#3B82F6;
+
+}
 
 /* =========================
    Welcome Panel
@@ -127,6 +174,7 @@ h2{
     height:120px;
 
 }
+
 .status-art img{
 
     width:100%;
@@ -136,23 +184,20 @@ h2{
 }
 
 /* =========================
-   Individual Panel Tweaks
+   Individual Panels
 ========================= */
 
 .calendar{
+
     grid-row:span 2;
+
 }
 
 .weather{
+
     grid-column:span 2;
     text-align:center;
-}
 
-#bin{
-    text-align:center;
-    font-size:28px;
-    font-weight:bold;
-    margin-top:25px;
 }
 
 /* =========================
@@ -175,6 +220,7 @@ h2{
     border:1px solid #ccc;
     font-size:16px;
     margin-left:8px;
+}
    
 button{
 
