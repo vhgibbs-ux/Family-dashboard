@@ -109,7 +109,35 @@ console.log("Calendar loaded:", data);
   }
 
 }
+function updateBinIndicator() {
 
+    const indicator = document.getElementById("bin-indicator");
+
+    if (!indicator) return;
+
+    // Wednesday 19 August 2026 marks the start of a BLUE week.
+    const referenceWednesday = new Date("2026-08-19");
+
+    const today = new Date();
+
+    // Find the Wednesday for the current week
+    const currentWednesday = new Date(today);
+
+    while (currentWednesday.getDay() !== 3) {
+        currentWednesday.setDate(currentWednesday.getDate() - 1);
+    }
+
+    const weeks = Math.floor(
+        (currentWednesday - referenceWednesday) /
+        (1000 * 60 * 60 * 24 * 7)
+    );
+
+    const blueWeek = weeks % 2 === 0;
+
+    indicator.className =
+        blueWeek ? "bin blue" : "bin black";
+
+}
 function updateClock(){
 
     // =========================
@@ -162,18 +190,6 @@ function updateClock(){
 
 
     // =========================
-    // Bin reminder
-    // (Temporary placeholder)
-    // =========================
-
-    const bin = document.getElementById("bin");
-
-    if (bin){
-        bin.innerHTML = "⬛ Black Bin<br><small>Collection Monday</small>";
-    }
-
-
-    // =========================
     // Display the greeting
     // =========================
 
@@ -193,9 +209,11 @@ updateClock();
 // Refresh every second
 // =========================
 
+updateClock();
+updateBinIndicator();
+
 setInterval(updateClock,1000);
 loadCalendar();
-
 // =========================
 // Tasks
 // =========================
