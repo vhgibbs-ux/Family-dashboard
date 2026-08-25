@@ -300,19 +300,27 @@ function renderTasks(){
 });
 }
 
-function addTask(){
+async function addTask(){
 
-const input = document.getElementById("taskInput");
-const owner = document.getElementById("taskOwner").value;
+    const input = document.getElementById("taskInput");
+    const owner = document.getElementById("taskOwner").value;
 
-if (input.value.trim() === "") return;
-   
-tasks.push({
+    if (input.value.trim() === "") return;
 
-    text: input.value,
-    owner: owner
+    tasks.push({
 
-});
+        text: input.value,
+        owner: owner
+
+    });
+
+    input.value = "";
+
+    await saveTasks();
+
+    renderTasks();
+
+}
 
     input.value="";
 
@@ -323,14 +331,14 @@ tasks.push({
 
 }
 
-function toggleTask(index){
+async function toggleTask(index){
 
     tasks.splice(index,1);
 
-    saveTasks();
+    await saveTasks();
 
     renderTasks();
 
 }
 
-renderTasks();
+loadTasks();
