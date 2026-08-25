@@ -264,7 +264,7 @@ async function saveTasks(){
 const familyIcons = {
 
     "Everyone":"🤍",
-    "Mumum":"❤️",
+    "Mummm":"❤️",
     "Dad":"💙",
     "Elizabeth":"🩵",
     "Markus":"💛"
@@ -311,7 +311,7 @@ async function addTask(){
     input.value="";
 
 
-    saveTasks();
+    await saveTasks();
 
     renderTasks();
 
