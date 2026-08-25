@@ -264,18 +264,12 @@ async function saveTasks(){
 const familyIcons = {
 
     "Everyone":"🤍",
-    "Mummm":"❤️",
+    "Mumum":"❤️",
     "Dad":"💙",
     "Elizabeth":"🩵",
     "Markus":"💛"
 
 };
-
-function saveTasks(){
-
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-
-}
 
 function renderTasks(){
 
@@ -313,14 +307,6 @@ async function addTask(){
         owner: owner
 
     });
-
-    input.value = "";
-
-    await saveTasks();
-
-    renderTasks();
-
-}
 
     input.value="";
 
