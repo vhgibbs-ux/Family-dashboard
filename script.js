@@ -311,9 +311,8 @@ async function addTask(){
     input.value="";
 
 
-    await saveTasks();
-
-    renderTasks();
+await saveTasks();
+renderTasks();
 
 }
 
