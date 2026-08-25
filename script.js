@@ -218,7 +218,49 @@ loadCalendar();
 // Tasks
 // =========================
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let tasks = [];
+
+async function loadTasks() {
+
+    const response = await fetch(
+
+        `${GRUBBINS.CORE_URL}/tasks`,
+
+        {
+            headers:{
+                "X-Grubbins-Key":GRUBBINS.API_KEY
+            }
+        }
+
+    );
+
+    tasks = await response.json();
+
+    renderTasks();
+
+}
+
+async function saveTasks(){
+
+    await fetch(
+
+        `${GRUBBINS.CORE_URL}/tasks`,
+
+        {
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json",
+                "X-Grubbins-Key":GRUBBINS.API_KEY
+            },
+
+            body:JSON.stringify(tasks)
+
+        }
+
+    );
+
+}
 const familyIcons = {
 
     "Everyone":"🤍",
