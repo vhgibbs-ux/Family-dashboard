@@ -240,25 +240,29 @@ async function loadTasks() {
 
 }
 
-async function saveTasks(){
+async function saveTasks() {
 
-    await fetch(
+    const response = await fetch(
 
         `${GRUBBINS.CORE_URL}/tasks`,
 
         {
-            method:"POST",
+            method: "POST",
 
-            headers:{
-                "Content-Type":"application/json",
-                "X-Grubbins-Key":GRUBBINS.API_KEY
+            headers: {
+                "Content-Type": "application/json",
+                "X-Grubbins-Key": GRUBBINS.API_KEY
             },
 
-            body:JSON.stringify(tasks)
+            body: JSON.stringify(tasks)
 
         }
 
     );
+
+    console.log("Save status:", response.status);
+
+    console.log("Save response:", await response.text());
 
 }
 const familyIcons = {
