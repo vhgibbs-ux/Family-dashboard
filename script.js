@@ -34,7 +34,30 @@ function displayCalendar(data) {
   const todayContainer = document.getElementById("today-events");
   const weekContainer = document.getElementById("week-events");
 
-   const events = data.items || [];
+   const events = (data.items || []).filter(event => {
+
+  const startString = event.start.dateTime || event.start.date;
+
+  if (!startString) return false;
+
+  const eventDate = new Date(startString);
+
+  // Monday of this week
+  const weekStart = new Date();
+  weekStart.setHours(0, 0, 0, 0);
+
+  const day = weekStart.getDay(); // Sun=0 ... Sat=6
+  const daysSinceMonday = (day + 6) % 7;
+
+  weekStart.setDate(weekStart.getDate() - daysSinceMonday);
+
+  // Monday next week
+  const weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekEnd.getDate() + 7);
+
+  return eventDate >= weekStart && eventDate < weekEnd;
+
+});
    
   const today = new Date().toDateString();
 
@@ -58,23 +81,30 @@ function displayCalendar(data) {
     }
 
     container.innerHTML = eventList.map(event => {
+console.log(event);
+ const date = event.start.dateTime
+  ? new Date(event.start.dateTime)
+  : new Date(event.start.date);
 
-      const start = event.start.dateTime
-        ? new Date(event.start.dateTime).toLocaleTimeString(
-            "en-GB",
-            {
-              hour: "2-digit",
-              minute: "2-digit"
-            }
-          )
-        : "All day";
+const dayName = date.toLocaleDateString("en-GB", {
+  weekday: "short"
+});
 
-      return `
-        <li class="calendar-event">
-          <strong>${start}</strong>
-          ${event.summary}
-        </li>
-      `;
+const start = event.start.dateTime
+  ? date.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  : "All day";
+
+    return `
+<li>
+${dayName} ${start}<br>
+${event.calendarIcon}<br>
+${event.calendarName}<br>
+${event.summary}
+</li>
+`;
 
     }).join("");
 
