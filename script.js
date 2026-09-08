@@ -34,8 +34,8 @@ function displayCalendar(data) {
   const todayContainer = document.getElementById("today-events");
   const weekContainer = document.getElementById("week-events");
 
-  const events = data.items || [];
-
+   const events = data.items || [];
+   
   const today = new Date().toDateString();
 
   const todayEvents = events.filter(event => {
