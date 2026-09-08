@@ -140,8 +140,6 @@ for (let day = 1; day <= 7; day++) {
 
   if (dayEvents.length === 0) {
 
-    html += `<p class="empty-day">Nothing planned</p>`;
-
     continue;
 
   }
@@ -157,13 +155,13 @@ for (let day = 1; day <= 7; day++) {
         })
       : "All day";
 
-    html += `
-      <div class="week-event">
-        <strong>${start}</strong><br>
-        ${event.calendarIcon} ${event.calendarName}<br>
-        ${event.summary}
-      </div>
-    `;
+html += `
+<div class="week-event">
+  <span class="week-time">${start}</span>
+  <span class="week-person">${event.calendarIcon} ${event.calendarName}</span>
+  <span class="week-summary">${event.summary}</span>
+</div>
+`;
 
   });
 

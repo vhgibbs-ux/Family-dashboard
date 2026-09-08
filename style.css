@@ -307,3 +307,43 @@ button:hover{
     font-weight:600;
 
 }
+.week-event{
+    display:grid;
+    grid-template-columns:70px 140px 1fr;
+    gap:12px;
+    padding:6px 0;
+    align-items:center;
+}
+
+.week-time{
+    font-weight:bold;
+}
+
+.week-person{
+    font-weight:600;
+}
+
+.week-summary{
+    color:#2c3e50;
+}
+
+.week h3{
+    margin-top:18px;
+    margin-bottom:6px;
+    color:#4b6584;
+    border-bottom:1px solid #dde8f2;
+    padding-bottom:3px;
+}
+
+.week-past{
+    color:#b8c2cc;
+}
+
+.week-today{
+    color:#2c3e50;
+    font-weight:bold;
+}
+
+.week-future{
+    color:#4b6584;
+}
