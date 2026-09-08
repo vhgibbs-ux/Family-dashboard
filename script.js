@@ -86,10 +86,6 @@ console.log(event);
   ? new Date(event.start.dateTime)
   : new Date(event.start.date);
 
-const dayName = date.toLocaleDateString("en-GB", {
-  weekday: "short"
-});
-
 const start = event.start.dateTime
   ? date.toLocaleTimeString("en-GB", {
       hour: "2-digit",
@@ -97,12 +93,12 @@ const start = event.start.dateTime
     })
   : "All day";
 
-    return `
-<li>
-${dayName} ${start}<br>
-${event.calendarIcon}<br>
-${event.calendarName}<br>
-${event.summary}
+return `
+<li class="calendar-event">
+  <strong>${start}</strong>
+  ${event.calendarIcon}
+  <span class="calendar-person">${event.calendarName}</span>
+  — ${event.summary}
 </li>
 `;
 

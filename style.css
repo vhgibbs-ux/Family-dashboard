@@ -197,19 +197,41 @@ h2{
    Individual Panels
 ========================= */
 
+.welcome{
+
+    grid-column:1;
+
+}
+
+.today-panel{
+
+    grid-column:2;
+
+}
+
+.missions{
+
+    grid-column:3;
+
+}
+
+.tasks{
+
+    grid-column:1;
+
+}
+
 .week{
 
     grid-column:2 / 4;
 
 }
 
-.weather{
+.birthdays{
 
-    grid-column:span 2;
-    text-align:center;
+    grid-column:1;
 
 }
-
 /* =========================
    Tasks
 ========================= */
@@ -255,12 +277,33 @@ button:hover{
 ========================= */
 
 .missions li{
-.panel:nth-of-type(4){
 
-    grid-column:1;
-
-}
     font-size:18px;
     padding:10px 0;
+
+}
+/* =========================
+   Calendar Layout
+========================= */
+
+.calendar-event{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    padding:8px 0;
+
+}
+
+.calendar-event strong{
+
+    min-width:55px;
+
+}
+
+.calendar-person{
+
+    font-weight:600;
 
 }
