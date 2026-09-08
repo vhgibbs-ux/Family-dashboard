@@ -118,11 +118,62 @@ ${event.summary}
   );
 
 
-  renderEvents(
-    weekContainer,
-    events,
-    "No upcoming events"
-  );
+  const weekdays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+
+let html = "";
+
+for (let day = 1; day <= 7; day++) {
+
+  const dayEvents = events.filter(event => {
+
+    const date = new Date(event.start.dateTime || event.start.date);
+
+    return date.getDay() === (day % 7);
+
+  });
+
+  html += `<h3>${weekdays[day % 7]}</h3>`;
+
+  if (dayEvents.length === 0) {
+
+    html += `<p class="empty-day">Nothing planned</p>`;
+
+    continue;
+
+  }
+
+  dayEvents.forEach(event => {
+
+    const date = new Date(event.start.dateTime || event.start.date);
+
+    const start = event.start.dateTime
+      ? date.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit"
+        })
+      : "All day";
+
+    html += `
+      <div class="week-event">
+        <strong>${start}</strong><br>
+        ${event.calendarIcon} ${event.calendarName}<br>
+        ${event.summary}
+      </div>
+    `;
+
+  });
+
+}
+
+weekContainer.innerHTML = html;
 
 }
     const data = await response.json();
