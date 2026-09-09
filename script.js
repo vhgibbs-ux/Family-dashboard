@@ -219,12 +219,16 @@ function updateBinIndicator() {
 
 const celebrations = [
 
-    {
-        month: 9,
-        day: 20,
-        title: "🎉 Happy Birthday Elizabeth! 🎂",
-        message: "We hope you have the most wonderful day ❤️"
-    }
+   {
+    month: 9,
+    day: 20,
+
+    person: "Elizabeth",
+
+    title: "🎉 Happy Birthday Elizabeth! 🎂",
+
+    message: "Have the most wonderful day ❤️"
+}
 
 ];
 
@@ -239,11 +243,17 @@ function checkCelebrations(){
         event.month === month &&
         event.day === day
     );
+if(!celebration){
 
-    if(!celebration) return;
+    return;
 
-    document.getElementById("message").innerHTML =
-        `<strong>${celebration.title}</strong><br>${celebration.message}`;
+}
+document.body.classList.add("birthday");
+
+document.getElementById("message").innerHTML =
+    `<strong>${celebration.title}</strong><br>
+     Today we're celebrating ${celebration.person}! ❤️<br>
+     ${celebration.message}`;
 
 }
 function updateClock(){

@@ -347,3 +347,12 @@ button:hover{
 .week-future{
     color:#4b6584;
 }
+/* =========================
+   Celebration Themes
+========================= */
+
+body.birthday{
+
+    background:#fff8e8;
+
+}
