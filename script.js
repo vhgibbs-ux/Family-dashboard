@@ -213,6 +213,39 @@ function updateBinIndicator() {
         blueWeek ? "bin blue" : "bin black";
 
 }
+// =========================
+// Celebrations
+// =========================
+
+const celebrations = [
+
+    {
+        month: 9,
+        day: 20,
+        title: "🎉 Happy Birthday Elizabeth! 🎂",
+        message: "We hope you have the most wonderful day ❤️"
+    }
+
+];
+
+function checkCelebrations(){
+
+    const today = new Date();
+
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+
+    const celebration = celebrations.find(event =>
+        event.month === month &&
+        event.day === day
+    );
+
+    if(!celebration) return;
+
+    document.getElementById("message").innerHTML =
+        `<strong>${celebration.title}</strong><br>${celebration.message}`;
+
+}
 function updateClock(){
 
     // =========================
@@ -286,8 +319,10 @@ updateClock();
 
 updateClock();
 updateBinIndicator();
+checkCelebrations();
 
 setInterval(updateClock,1000);
+
 loadCalendar();
 // =========================
 // Tasks
