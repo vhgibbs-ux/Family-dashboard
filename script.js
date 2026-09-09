@@ -137,7 +137,11 @@ function displayCalendar(data) {
     }
 
     container.innerHTML = eventList.map(event => {
-console.log(event);
+console.log(
+    "Calendar:",
+    event.calendarName,
+    profile
+);
  const date = event.start.dateTime
   ? new Date(event.start.dateTime)
   : new Date(event.start.date);
