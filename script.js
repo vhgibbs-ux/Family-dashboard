@@ -16,7 +16,63 @@ const GRUBBINS = {
   CORE_URL: "https://grubbins-core.v-h-gibbs.workers.dev",
   API_KEY: "ErasmusFamilj04"
 };
+// ================================
+// Family Profiles
+// ================================
 
+const familyProfiles = {
+
+    Victoria: {
+
+        displayName: "Mumbot",
+
+        heart: "❤️",
+
+        colour: "#D9534F"
+
+    },
+
+    Dave: {
+
+        displayName: "Love of my life",
+
+        heart: "💙",
+
+        colour: "#4A90E2"
+
+    },
+
+    Elizabeth: {
+
+        displayName: "Elizabeth",
+
+        heart: "🩵",
+
+        colour: "#7DD3FC"
+
+    },
+
+    Markus: {
+
+        displayName: "Markus",
+
+        heart: "💛",
+
+        colour: "#F4C542"
+
+    },
+
+    Everyone: {
+
+        displayName: "Everyone",
+
+        heart: "🤍",
+
+        colour: "#B0BEC5"
+
+    }
+
+};
 async function loadCalendar() {
 
   try {
@@ -92,12 +148,14 @@ const start = event.start.dateTime
       minute: "2-digit"
     })
   : "All day";
-
+const profile = familyProfiles[event.calendarName];
 return `
 <li class="calendar-event">
   <strong>${start}</strong>
-  ${event.calendarIcon}
-  <span class="calendar-person">${event.calendarName}</span>
+${profile ? profile.heart : "🤍"}
+ <span class="calendar-person">
+    ${profile ? profile.displayName : event.calendarName}
+</span>
   — ${event.summary}
 </li>
 `;
@@ -381,15 +439,6 @@ async function saveTasks(){
     );
 
 }
-const familyIcons = {
-
-    "Everyone":"🤍",
-    "Mummm":"❤️",
-    "Dad":"💙",
-    "Elizabeth":"🩵",
-    "Markus":"💛"
-
-};
 
 function renderTasks(){
 
@@ -405,7 +454,9 @@ function renderTasks(){
     `<input type="checkbox"
     onchange="toggleTask(${index})">
 
-    <strong>${familyIcons[task.owner]} ${task.owner}</strong><br>
+    const profile = familyProfiles[task.owner];
+
+li.innerHTML =
 
     ${task.text}`;
 
