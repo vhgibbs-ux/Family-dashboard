@@ -24,6 +24,8 @@ const familyProfiles = {
 
     Victoria: {
 
+        aliases: ["Victoria", "Mum", "Toria", "Mummm"],
+
         displayName: "Mumbot",
 
         heart: "❤️",
@@ -34,7 +36,9 @@ const familyProfiles = {
 
     Dave: {
 
-        displayName: "Love of my life",
+        aliases: ["Dave", "Dad"],
+
+        displayName: "Daddy My Lord",
 
         heart: "💙",
 
@@ -43,6 +47,8 @@ const familyProfiles = {
     },
 
     Elizabeth: {
+
+        aliases: ["Elizabeth", "Bean"],
 
         displayName: "Elizabeth",
 
@@ -54,6 +60,8 @@ const familyProfiles = {
 
     Markus: {
 
+        aliases: ["Markus", "Moo", "Goose", "Goosey"],
+
         displayName: "Markus",
 
         heart: "💛",
@@ -64,6 +72,8 @@ const familyProfiles = {
 
     Everyone: {
 
+        aliases: [],
+
         displayName: "Everyone",
 
         heart: "🤍",
@@ -73,6 +83,19 @@ const familyProfiles = {
     }
 
 };
+function getProfile(name) {
+
+    for (const profile of Object.values(familyProfiles)) {
+
+        if (profile.aliases.includes(name)) {
+            return profile;
+        }
+
+    }
+
+    return familyProfiles.Everyone;
+
+}
 async function loadCalendar() {
 
   try {
@@ -137,11 +160,6 @@ function displayCalendar(data) {
     }
 
     container.innerHTML = eventList.map(event => {
-console.log(
-    "Calendar:",
-    event.calendarName,
-    profile
-);
  const date = event.start.dateTime
   ? new Date(event.start.dateTime)
   : new Date(event.start.date);
@@ -152,7 +170,13 @@ const start = event.start.dateTime
       minute: "2-digit"
     })
   : "All day";
-const profile = familyProfiles[event.calendarName];
+const profile = getProfile(event.calendarName);
+console.log(
+    "Calendar:",
+    event.calendarName,
+    profile
+);
+
 return `
 <li class="calendar-event">
   <strong>${start}</strong>
@@ -453,9 +477,7 @@ function renderTasks() {
 
     tasks.forEach((task, index) => {
 
-        const profile =
-            familyProfiles[task.owner] ||
-            familyProfiles["Everyone"];
+   const profile = getProfile(task.owner);
 
         const li = document.createElement("li");
 
