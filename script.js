@@ -444,29 +444,37 @@ async function saveTasks(){
 
 }
 
-function renderTasks(){
+function renderTasks() {
+  console.log("NEW renderTasks is running");
 
     const list = document.getElementById("taskList");
 
     list.innerHTML = "";
 
-    tasks.forEach((task,index)=>{
+    tasks.forEach((task, index) => {
 
-    const li = document.createElement("li");
+        const profile =
+            familyProfiles[task.owner] ||
+            familyProfiles["Everyone"];
 
-    li.innerHTML =
-    `<input type="checkbox"
-    onchange="toggleTask(${index})">
+        const li = document.createElement("li");
 
-    const profile = familyProfiles[task.owner];
+        li.innerHTML = `
+            <input
+                type="checkbox"
+                onchange="toggleTask(${index})">
 
-li.innerHTML =
+            <span style="color:${profile.colour}">
+                ${profile.heart} ${profile.displayName}
+            </span>
 
-    ${task.text}`;
+            — ${task.text}
+        `;
 
-    list.appendChild(li);
+        list.appendChild(li);
 
-});
+    });
+
 }
 
 async function addTask(){
