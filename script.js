@@ -230,28 +230,30 @@ for (let day = 1; day <= 7; day++) {
 
   }
 
-  dayEvents.forEach(event => {
+ dayEvents.forEach(event => {
 
     const date = new Date(event.start.dateTime || event.start.date);
 
     const start = event.start.dateTime
-      ? date.toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit"
+        ? date.toLocaleTimeString("en-GB", {
+            hour: "2-digit",
+            minute: "2-digit"
         })
-      : "All day";
+        : "All day";
 
-html += `
+    const profile = getProfile(event.calendarName);
+
+    html += `
 <div class="week-event">
-  <span class="week-time">${start}</span>
-  <span class="week-person">${event.calendarIcon} ${event.calendarName}</span>
-  <span class="week-summary">${event.summary}</span>
+    <span class="week-time">${start}</span>
+    <span class="week-person">
+        ${profile.heart} ${profile.displayName}
+    </span>
+    <span class="week-summary">${event.summary}</span>
 </div>
 `;
 
-  });
-
-}
+});
 
 weekContainer.innerHTML = html;
 
@@ -477,7 +479,9 @@ function renderTasks() {
 
     tasks.forEach((task, index) => {
 
-   const profile = getProfile(task.owner);
+console.log(task.owner);
+
+const profile = getProfile(task.owner);
 
         const li = document.createElement("li");
 
