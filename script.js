@@ -247,7 +247,7 @@ for (let day = 1; day <= 7; day++) {
 <div class="week-event">
     <span class="week-time">${start}</span>
     <span class="week-person">
-        ${profile.heart} ${profile.displayName}
+       🔥 ${profile.displayName} 🔥
     </span>
     <span class="week-summary">${event.summary}</span>
 </div>
