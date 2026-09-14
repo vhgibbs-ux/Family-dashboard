@@ -300,7 +300,7 @@ const celebrations = [
 
    {
     month: 9,
-    day: 20,
+    day: 14,
 
     person: "Elizabeth",
 
@@ -328,7 +328,7 @@ if(!celebration){
 
 }
 document.body.classList.add("birthday");
-
+showBirthdayScene(celebration);
 document.getElementById("message").innerHTML =
     `<strong>${celebration.title}</strong><br>
      Today we're celebrating ${celebration.person}! ❤️<br>
@@ -390,7 +390,10 @@ function updateClock(){
     // Display the greeting
     // =========================
 
-    document.getElementById("message").innerHTML = greeting;
+    if (!document.body.classList.contains("birthday")) {
+    document.getElementById("message").innerHTML =
+        greeting;
+}
 
 }
 
@@ -408,6 +411,23 @@ updateClock();
 
 updateClock();
 updateBinIndicator();
+function showBirthdayScene(celebration) {
+
+    const scene = document.getElementById("birthday-scene");
+
+    scene.innerHTML = `
+       <div class="birthday-content">
+
+        <h1>${celebration.title}</h1>
+
+        <p>${celebration.message}</p>
+
+        <img src="images/Dancing-Snoopy-1.png" id="birthday-snoopy">
+
+    </div>
+`;
+
+}
 checkCelebrations();
 
 setInterval(updateClock,1000);
