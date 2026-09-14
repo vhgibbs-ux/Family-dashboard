@@ -97,6 +97,20 @@ function getProfile(name) {
     return familyProfiles.Everyone;
 
 }
+
+function populateTaskOwnerMenu() {
+    const select = document.getElementById("taskOwner");
+    if (!select) return;
+
+    select.innerHTML = Object.entries(familyProfiles)
+        .map(([key, profile]) => `
+            <option value="${key}">
+                ${profile.heart} ${profile.displayName}
+            </option>
+        `)
+        .join("");
+}
+
 // =========================
 // Calendar
 // =========================
@@ -511,5 +525,5 @@ async function toggleTask(index){
     renderTasks();
 
 }
-
+populateTaskOwnerMenu();
 loadTasks();
