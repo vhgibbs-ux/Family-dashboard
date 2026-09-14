@@ -1,3 +1,4 @@
+console.log("SCRIPT VERSION = SEPT 10 TEST");
 /* ==========================================
    Grubbins Family Dashboard
    script.js
@@ -96,180 +97,156 @@ function getProfile(name) {
     return familyProfiles.Everyone;
 
 }
+// =========================
+// Calendar
+// =========================
+
 async function loadCalendar() {
 
-  try {
+    try {
 
-    const response = await fetch(
-      `${GRUBBINS.CORE_URL}/calendar`,
-      {
-        headers: {
-          "X-Grubbins-Key": GRUBBINS.API_KEY
-        }
-      }
-    );
-function displayCalendar(data) {
+        const response = await fetch(
+            `${GRUBBINS.CORE_URL}/calendar`,
+            {
+                headers: {
+                    "X-Grubbins-Key": GRUBBINS.API_KEY
+                }
+            }
+        );
 
-  const todayContainer = document.getElementById("today-events");
-  const weekContainer = document.getElementById("week-events");
+        const data = await response.json();
 
-   const events = (data.items || []).filter(event => {
+        displayCalendar(data);
 
-  const startString = event.start.dateTime || event.start.date;
+        console.log("Calendar loaded:", data);
 
-  if (!startString) return false;
+    } catch (err) {
 
-  const eventDate = new Date(startString);
+        console.error("Calendar error:", err);
 
-  // Monday of this week
-  const weekStart = new Date();
-  weekStart.setHours(0, 0, 0, 0);
-
-  const day = weekStart.getDay(); // Sun=0 ... Sat=6
-  const daysSinceMonday = (day + 6) % 7;
-
-  weekStart.setDate(weekStart.getDate() - daysSinceMonday);
-
-  // Monday next week
-  const weekEnd = new Date(weekStart);
-  weekEnd.setDate(weekEnd.getDate() + 7);
-
-  return eventDate >= weekStart && eventDate < weekEnd;
-
-});
-   
-  const today = new Date().toDateString();
-
-  const todayEvents = events.filter(event => {
-
-    if (!event.start.dateTime) {
-      return false;
     }
 
-    return new Date(event.start.dateTime).toDateString() === today;
+}
 
-  });
+function displayCalendar(data) {
 
-  const renderEvents = (container, eventList, emptyMessage) => {
+    const todayContainer = document.getElementById("today-events");
+    const weekContainer = document.getElementById("week-events");
+
+    const events = data.items || [];
+
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const todayEvents = events.filter(event => {
+
+        const start = new Date(event.start.dateTime || event.start.date);
+        start.setHours(0,0,0,0);
+
+        return start.getTime() === today.getTime();
+
+    });
+
+    renderEvents(
+        todayContainer,
+        todayEvents,
+        "No events today 🎉"
+    );
+
+    const weekStart = new Date(today);
+
+    const day = (weekStart.getDay() + 6) % 7;
+
+    weekStart.setDate(weekStart.getDate() - day);
+
+    const weekEnd = new Date(weekStart);
+
+    weekEnd.setDate(weekEnd.getDate() + 7);
+
+    const weekEvents = events.filter(event => {
+
+        const start = new Date(event.start.dateTime || event.start.date);
+
+        return start >= weekStart && start < weekEnd;
+
+    });
+
+    renderWeek(weekContainer, weekEvents);
+
+}
+
+function renderEvents(container, eventList, emptyMessage) {
 
     if (!container) return;
 
     if (eventList.length === 0) {
-      container.innerHTML = `<li>${emptyMessage}</li>`;
-      return;
+
+        container.innerHTML = `<li>${emptyMessage}</li>`;
+        return;
+
     }
 
     container.innerHTML = eventList.map(event => {
- const date = event.start.dateTime
-  ? new Date(event.start.dateTime)
-  : new Date(event.start.date);
 
-const start = event.start.dateTime
-  ? date.toLocaleTimeString("en-GB", {
-      hour: "2-digit",
-      minute: "2-digit"
-    })
-  : "All day";
-const profile = getProfile(event.calendarName);
-console.log(
-    "Calendar:",
-    event.calendarName,
-    profile
-);
+        const date = new Date(event.start.dateTime || event.start.date);
 
-return `
+        const start = event.start.dateTime
+            ? date.toLocaleTimeString("en-GB", {
+                hour: "2-digit",
+                minute: "2-digit"
+            })
+            : "All day";
+
+        const profile = getProfile(event.calendarName);
+
+        return `
 <li class="calendar-event">
-  <strong>${start}</strong>
-${profile ? profile.heart : "🤍"}
- <span class="calendar-person">
-    ${profile ? profile.displayName : event.calendarName}
-</span>
-  — ${event.summary}
-</li>
-`;
+    <strong>${start}</strong>
+    ${profile.heart}
+    <span class="calendar-person">${profile.displayName}</span>
+    — ${event.summary}
+</li>`;
 
     }).join("");
 
-  };
+}
 
+function renderWeek(container, events) {
 
-  renderEvents(
-    todayContainer,
-    todayEvents,
-    "No events today 🎉"
-  );
+    if (!container) return;
 
+    events.sort((a,b)=>
+        new Date(a.start.dateTime || a.start.date) -
+        new Date(b.start.dateTime || b.start.date)
+    );
 
-  const weekdays = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-];
+    let html = "";
 
-let html = "";
+    events.forEach(event => {
 
-for (let day = 1; day <= 7; day++) {
+        const date = new Date(event.start.dateTime || event.start.date);
 
-  const dayEvents = events.filter(event => {
+        const profile = getProfile(event.calendarName);
 
-    const date = new Date(event.start.dateTime || event.start.date);
+        const start = event.start.dateTime
+            ? date.toLocaleTimeString("en-GB",{
+                hour:"2-digit",
+                minute:"2-digit"
+            })
+            : "All day";
 
-    return date.getDay() === (day % 7);
-
-  });
-
-  html += `<h3>${weekdays[day % 7]}</h3>`;
-
-  if (dayEvents.length === 0) {
-
-    continue;
-
-  }
-
- dayEvents.forEach(event => {
-
-    const date = new Date(event.start.dateTime || event.start.date);
-
-    const start = event.start.dateTime
-        ? date.toLocaleTimeString("en-GB", {
-            hour: "2-digit",
-            minute: "2-digit"
-        })
-        : "All day";
-
-    const profile = getProfile(event.calendarName);
-
-    html += `
+        html += `
 <div class="week-event">
     <span class="week-time">${start}</span>
     <span class="week-person">
-       🔥 ${profile.displayName} 🔥
+        ${profile.heart} ${profile.displayName}
     </span>
     <span class="week-summary">${event.summary}</span>
-</div>
-`;
+</div>`;
 
-});
+    });
 
-weekContainer.innerHTML = html;
-
-}
-    const data = await response.json();
-
-
-window.grubbinsCalendar = data;
-displayCalendar(data);
-console.log("Calendar loaded:", data);
-
-  } catch (err) {
-
-    console.error("Calendar error:", err);
-
-  }
+    container.innerHTML = html;
 
 }
 function updateBinIndicator() {
