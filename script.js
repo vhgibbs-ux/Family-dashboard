@@ -281,6 +281,66 @@ events.forEach(event => {
     container.innerHTML = html;
 
 }
+// =========================
+// Weather
+// =========================
+
+async function loadWeather() {
+
+    const weather = document.getElementById("weather-content");
+
+    try {
+
+        const response = await fetch(
+            "https://api.open-meteo.com/v1/forecast?latitude=50.7192&longitude=-1.8808&current=temperature_2m,weather_code,wind_speed_10m&timezone=Europe%2FLondon"
+        );
+
+        const data = await response.json();
+
+        const temperature = Math.round(data.current.temperature_2m);
+        const wind = Math.round(data.current.wind_speed_10m);
+        const code = data.current.weather_code;
+
+        let icon = "🌤️";
+        let description = "Mixed weather";
+
+        if (code === 0) {
+            icon = "☀️";
+            description = "Clear sky";
+        } else if (code <= 3) {
+            icon = "🌤️";
+            description = "Partly cloudy";
+        } else if (code <= 48) {
+            icon = "🌫️";
+            description = "Foggy";
+        } else if (code <= 67) {
+            icon = "🌧️";
+            description = "Rain";
+        } else if (code <= 77) {
+            icon = "❄️";
+            description = "Snow";
+        } else {
+            icon = "⛈️";
+            description = "Showers / storms";
+        }
+
+        weather.innerHTML = `
+            <div class="weather-main">
+                <span class="weather-icon">${icon}</span>
+                <span class="weather-temp">${temperature}°C</span>
+            </div>
+            <div class="weather-description">${description}</div>
+            <div class="weather-wind">💨 Wind ${wind} km/h</div>
+        `;
+
+    } catch (error) {
+
+        weather.innerHTML = "Weather unavailable right now.";
+
+        console.error("Weather error:", error);
+    }
+}
+
 function updateBinIndicator() {
 
     const indicator = document.getElementById("bin-indicator");
@@ -492,6 +552,7 @@ checkCelebrations();
 setInterval(updateClock,1000);
 
 loadCalendar();
+loadWeather();
 // =========================
 // Tasks
 // =========================
