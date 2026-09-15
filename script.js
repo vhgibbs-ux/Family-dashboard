@@ -606,3 +606,47 @@ async function toggleTask(index){
 }
 populateTaskOwnerMenu();
 loadTasks();
+// =========================
+// Scene Navigation
+// =========================
+const scenes = [
+    "today-scene",
+    "week-scene",
+    "radar-scene",
+    "food-scene"
+];
+let currentScene = 0;
+function showScene() {
+
+    scenes.forEach(sceneId => {
+
+        document.getElementById(sceneId).style.display = "none";
+
+    });
+
+    document.getElementById(scenes[currentScene]).style.display = "block";
+}
+function nextScene() {
+
+    currentScene++;
+
+    if (currentScene >= scenes.length) {
+        currentScene = 0;
+    }
+
+    showScene();
+}
+// Go right one scene arrow
+document.getElementById("next-scene").addEventListener("click", nextScene);
+function prevScene() {
+
+    currentScene--;
+
+    if (currentScene < 0) {
+        currentScene = scenes.length - 1;
+    }
+
+    showScene();
+}
+// Go left one scene arrow
+document.getElementById("prev-scene").addEventListener("click", prevScene);

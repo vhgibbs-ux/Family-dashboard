@@ -348,6 +348,18 @@ button:hover{
     color:#4b6584;
 }
 /* =========================
+   Scenes
+   ========================= */
+
+.scene {
+    display: none;
+}
+
+#today-scene {
+    display: block;
+}
+
+/* =========================
    Celebration Themes
 ========================= */
 
@@ -413,4 +425,26 @@ body.birthday #birthday-scene {
     to {
         transform: translateY(100vh) rotate(720deg);
     }
+}
+/* =========================
+   Scene Navigation
+========================= */
+
+.scene-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.scene-navigation button {
+    background: none;
+    border: none;
+
+    font-size: 40px;
+    cursor: pointer;
+
+    padding: 5px 15px;
 }

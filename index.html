@@ -15,6 +15,7 @@
 <body>
 
 <div class="dashboard">
+    <div id="today-scene" class="scene">
 
     <!-- =========================
          Welcome
@@ -55,7 +56,7 @@
       <li>Loading today's events...</li>
   </ul>
 
-</div>
+</div> <!-- closes Today panel -->
 
 
     <!-- =========================
@@ -75,10 +76,39 @@
 
         </ul>
 
-    </div>
-
+    </div> <!-- closes mission panel -->
 
     <!-- =========================
+         Weather
+    ========================== -->
+
+    <div class="panel weather">
+
+        <h2>🌤️ Weather</h2>
+
+    </div> <!-- closes weather panel -->
+    
+</div> <!-- closes today-scene -->
+<div id="week-scene" class="scene">
+    <!-- =========================
+         This Week
+    ========================== -->
+
+    <div class="panel week">
+
+        <h2>📆 This Week</h2>
+
+      <ul id="week-events">
+
+<li>Loading this week's events...</li>
+</ul>
+
+    </div> <!-- closes week panel -->
+ 
+</div> <!-- closes week-scene -->
+
+<div id="radar-scene" class="scene">
+<!-- =========================
          Family Tasks
     ========================== -->
 
@@ -101,24 +131,7 @@
 
         <ul id="taskList"></ul>
 
-    </div>
-
-
-    <!-- =========================
-         This Week
-    ========================== -->
-
-    <div class="panel week">
-
-        <h2>📆 This Week</h2>
-
-      <ul id="week-events">
-
-<li>Loading this week's events...</li>
-</ul>
-
-    </div>
-
+    </div> <!-- closes family tasks panel -->
 
     <!-- =========================
          Birthdays
@@ -136,8 +149,19 @@
 
 </ul>
 
-    </div>
+    </div><!-- closes birthday panel -->
+    </div> <!-- closes radar-scene -->
 
+<div id="food-scene" class="scene">
+   <!-- =========================
+         Meals
+    ========================== -->
+
+    <div class="panel">
+
+        <h2>🍽️ Meal Planner</h2>
+
+    </div> <!-- closes meal planner panel -->
 
     <!-- =========================
          Shopping
@@ -147,41 +171,29 @@
 
         <h2>🛒 Shopping List</h2>
 
-    </div>
+    </div> <!-- closes shopping panel -->
 
 
-    <!-- =========================
-         Meals
-    ========================== -->
-
-    <div class="panel">
-
-        <h2>🍽️ Meal Planner</h2>
-
-    </div>
+</div> <!-- closes food-scene -->
 
 
-    <!-- =========================
-         Weather
-    ========================== -->
+</div> <!-- closes dashboard -->
+<div class="scene-navigation">
+    <button id="prev-scene">‹</button>
+    <button id="next-scene">›</button>
+</div> <!-- closes scene-navigation -->
 
-    <div class="panel weather">
 
-        <h2>🌤️ Weather</h2>
-
-    </div>
-
-</div>
 <div id="birthday-scene">
 
     <!-- Celebration Scene -->
     
-</div>
+</div> <!-- closes celebration scene -->
 
 <script src="script.js"></script>
 
 </body>
 
 </html>
-</div>
+
 
