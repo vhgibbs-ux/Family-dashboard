@@ -112,7 +112,7 @@ function populateTaskOwnerMenu() {
 }
 
 // =========================
-// Calendar
+// Calendar Today
 // =========================
 
 async function loadCalendar() {
@@ -224,6 +224,9 @@ function renderEvents(container, eventList, emptyMessage) {
     }).join("");
 
 }
+// =========================
+// Calendar this week
+// =========================
 
 function renderWeek(container, events) {
 
@@ -236,20 +239,35 @@ function renderWeek(container, events) {
 
     let html = "";
 
-    events.forEach(event => {
+    let currentDay = "";
 
-        const date = new Date(event.start.dateTime || event.start.date);
+events.forEach(event => {
 
-        const profile = getProfile(event.calendarName);
+    const date = new Date(event.start.dateTime || event.start.date);
 
-        const start = event.start.dateTime
-            ? date.toLocaleTimeString("en-GB",{
-                hour:"2-digit",
-                minute:"2-digit"
-            })
-            : "All day";
+    const day = date.toLocaleDateString("en-GB", {
+        weekday: "long"
+    });
+
+    if (day !== currentDay) {
+        currentDay = day;
 
         html += `
+<div class="week-day-heading">
+    ${day}
+</div>`;
+    }
+
+    const profile = getProfile(event.calendarName);
+
+    const start = event.start.dateTime
+        ? date.toLocaleTimeString("en-GB", {
+            hour: "2-digit",
+            minute: "2-digit"
+        })
+        : "All day";
+
+    html += `
 <div class="week-event">
     <span class="week-time">${start}</span>
     <span class="week-person">
@@ -258,7 +276,7 @@ function renderWeek(container, events) {
     <span class="week-summary">${event.summary}</span>
 </div>`;
 
-    });
+});
 
     container.innerHTML = html;
 
