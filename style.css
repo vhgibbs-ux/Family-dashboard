@@ -394,3 +394,23 @@ body.birthday #birthday-scene {
 #birthday-snoopy {
     width: 260px;
 }
+#birthday-confetti {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.confetti-piece {
+    position: absolute;
+    top: -20px;
+    width: 10px;
+    height: 16px;
+    background: red;
+    animation: confetti-fall linear infinite;
+}
+
+@keyframes confetti-fall {
+    to {
+        transform: translateY(100vh) rotate(720deg);
+    }
+}

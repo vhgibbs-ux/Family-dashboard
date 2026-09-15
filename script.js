@@ -300,7 +300,7 @@ const celebrations = [
 
    {
     month: 9,
-    day: 14,
+    day: 20,
 
     person: "Elizabeth",
 
@@ -411,14 +411,21 @@ updateClock();
 
 updateClock();
 updateBinIndicator();
+
+// =========================
+// BIRTHDAY CELEBRATION SCENE
+// =========================
 function showBirthdayScene(celebration) {
 
     const scene = document.getElementById("birthday-scene");
 
     scene.innerHTML = `
+    <div id="birthday-confetti"></div>
        <div class="birthday-content">
 
-        <h1>${celebration.title}</h1>
+      <div class="birthday-banner">
+    ${celebration.title}
+</div>
 
         <p>${celebration.message}</p>
 
@@ -426,6 +433,40 @@ function showBirthdayScene(celebration) {
 
     </div>
 `;
+
+// CONFETTI
+const confetti = document.getElementById("birthday-confetti");
+
+for (let i = 0; i < 80; i++) {
+    const piece = document.createElement("span");
+
+    piece.className = "confetti-piece";
+
+    piece.style.left = Math.random() * 100 + "%";
+    piece.style.animationDelay = Math.random() * 3 + "s";
+    piece.style.animationDuration = 3 + Math.random() * 3 + "s";
+
+    confetti.appendChild(piece);
+}
+
+// SNOOPY
+ const snoopy = document.getElementById("birthday-snoopy");
+
+    const snoopyFrames = [
+        "images/Dancing-Snoopy-1.png",
+        "images/Dancing-Snoopy-2.png",
+        "images/Dancing-Snoopy-3.png",
+        "images/Dancing-Snoopy-4.png",
+        "images/Dancing-Snoopy-3.png",
+        "images/Dancing-Snoopy-2.png"
+    ];
+
+    let frame = 0;
+
+    setInterval(() => {
+        frame = (frame + 1) % snoopyFrames.length;
+        snoopy.src = snoopyFrames[frame];
+    }, 250);
 
 }
 checkCelebrations();
