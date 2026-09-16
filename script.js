@@ -564,7 +564,7 @@ function getThanksgiving(year) {
 async function getSnoopyImages(category) {
 
     const response = await fetch(
-        `https://api.github.com/repos/vhgibbs-ux/Family-dashboard/contents/images/snoopy/single/${category}`
+        `https://api.github.com/repos/vhgibbs-ux/Family-dashboard/contents/images/Snoopy/Single/${category}`
     );
 
     const files = await response.json();
