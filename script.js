@@ -563,14 +563,16 @@ function getThanksgiving(year) {
 
 async function getSnoopyImages(category) {
 
-    const response = await fetch(
-        `https://api.github.com/repos/vhgibbs-ux/Family-dashboard/contents/images/Snoopy/Single/${category}`
-    );
+   const url = `https://api.github.com/repos/vhgibbs-ux/Family-dashboard/contents/images/Snoopy/Single/${category}`;
+
+console.log("SNOOPY URL:", url);
+
+const response = await fetch(url);
 
     const files = await response.json();
-
+console.log("SNOOPY FILES:", files);
     return files
-        .filter(file => file.name.toLowerCase().endsWith(".jpeg"))
+        .filter(file => file.name.toLowerCase().endsWith(".png"))
         .map(file => file.download_url);
 }
 // =========================
