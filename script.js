@@ -579,10 +579,10 @@ console.log("SNOOPY FILES:", files);
 // Test Snoopy folder
 // =========================
 
-console.log("SNOOPY TEST STARTING");
-
 getSnoopyImages("Summer").then(images => {
-    console.log("Summer Snoopy images:", images);
+    const snoopyImage = document.getElementById("snoopy-image");
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    snoopyImage.src = randomImage;
 });
 
 // =========================
