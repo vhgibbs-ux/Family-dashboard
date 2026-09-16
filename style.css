@@ -149,11 +149,43 @@ h2 {
 
 #today-scene .welcome {
     grid-column: 1 / 3;
-    display: flex;
-    justify-content: space-between;
+
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+
     align-items: center;
-    min-height: 150px;
+    min-height: 190px;
 }
+/* =========================
+   WELCOME BAR
+========================= */
+
+.welcome-weather {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.welcome-weather #weather-content {
+    text-align: left;
+}
+
+.status-content {
+    text-align: center;
+}
+
+.status-art {
+    width: 180px;
+    height: 180px;
+    justify-self: end;
+}
+
+.status-art img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 
 .status-content {
     flex: 1;
@@ -190,14 +222,6 @@ h2 {
 .missions li {
     font-size: 18px;
     padding: 10px 0;
-}
-
-
-/* Weather */
-
-#today-scene .weather {
-    grid-column: 1 / 3;
-    min-height: 100px;
 }
 
 
@@ -386,34 +410,45 @@ button:hover {
 }
 
 
-/* =========================
+//* =========================
    SCENE NAVIGATION
 ========================= */
 
 .scene-navigation {
+    position: fixed;
+    top: 8px;
+    left: 0;
+    right: 0;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    padding: 10px 5px;
-    box-sizing: border-box;
+
+    padding: 0 8px;
+
+    z-index: 900;
+
+    pointer-events: none;
 }
 
 .scene-navigation button {
     background: none;
     border: none;
     color: #2c3e50;
-    font-size: 40px;
+
+    font-size: 42px;
+    line-height: 1;
+
     cursor: pointer;
     padding: 5px 15px;
+
+    pointer-events: auto;
 }
 
 .scene-navigation button:hover {
     background: none;
     color: #4b6584;
 }
-
-
 /* =========================
    CELEBRATION THEME
 ========================= */

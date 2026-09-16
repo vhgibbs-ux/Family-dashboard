@@ -13,6 +13,10 @@
 </head>
 
 <body>
+<div class="scene-navigation">
+    <button id="prev-scene">‹</button>
+    <button id="next-scene">›</button>
+</div> <!-- closes scene-navigation -->
 
 <div class="dashboard">
     <div id="today-scene" class="scene">
@@ -21,8 +25,18 @@
          Welcome
     ========================== -->
 
- <div class="panel status-panel welcome">
-<div class="status-content">
+ <!-- Welcome -->
+<div class="panel status-panel welcome">
+
+    <!-- Weather -->
+    <div class="welcome-weather">
+        <div id="weather-content">
+            Loading weather...
+        </div>
+    </div> <!-- closes welcome-weather -->
+
+    <!-- Welcome text -->
+    <div class="status-content">
         <h1>Grubbins</h1>
 
         <p class="subtitle">
@@ -30,15 +44,16 @@
         </p>
 
         <p id="today"></p>
-
         <p id="clock"></p>
-
         <p id="message"></p>
-</div>
-       <div class="status-art">
-            <img src="images/Random 0016.jpeg" alt="Snoopy">
-           </div>
-    </div>
+    </div> <!-- closes status-content -->
+
+    <!-- Snoopy -->
+    <div class="status-art">
+        <img src="images/Random 0016.jpeg" alt="Snoopy">
+    </div> <!-- closes status-art -->
+
+</div> <!-- closes Welcome panel -->
 
 
     <!-- =========================
@@ -78,16 +93,7 @@
 
     </div> <!-- closes mission panel -->
 
-    <!-- =========================
-         Weather
-    ========================== -->
-    
-<div class="panel weather">
-    <h2>🌤️ Weather</h2>
-    <div id="weather-content">
-        Loading weather...
-    </div>
-</div> <!-- closes weather panel -->
+
     
 </div> <!-- closes today-scene -->
 <div id="week-scene" class="scene">
@@ -179,10 +185,6 @@
 
 
 </div> <!-- closes dashboard -->
-<div class="scene-navigation">
-    <button id="prev-scene">‹</button>
-    <button id="next-scene">›</button>
-</div> <!-- closes scene-navigation -->
 
 
 <div id="birthday-scene">

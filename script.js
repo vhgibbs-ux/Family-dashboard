@@ -371,6 +371,219 @@ function updateBinIndicator() {
 
 }
 // =========================
+// Snoopy Selection
+// =========================
+
+function getSnoopyCategoryWeights() {
+
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const day = today.getDate();
+    const hour = today.getHours();
+
+    const categories = [];
+
+    // ALWAYS available
+    categories.push({
+        category: "Random",
+        weight: 1
+    });
+
+    // SEASONS
+    if ([12, 1, 2].includes(month)) {
+        categories.push({
+            category: "Winter",
+            weight: 2
+        });
+    }
+
+    if ([3, 4, 5].includes(month)) {
+        categories.push({
+            category: "Spring",
+            weight: 2
+        });
+    }
+
+    if ([6, 7, 8].includes(month)) {
+        categories.push({
+            category: "Summer",
+            weight: 2
+        });
+    }
+
+    if ([9, 10, 11].includes(month)) {
+        categories.push({
+            category: "Autumn",
+            weight: 2
+        });
+    }
+
+        // =========================
+    // SPECIAL DAYS
+    // =========================
+
+    // CHRISTMAS
+    if (month === 12 && day >= 1 && day <= 25) {
+        categories.push({
+            category: "Christmas",
+            weight: day === 25 ? 999 : 4
+        });
+    }
+
+    // NEW YEAR
+    if (month === 12 && day >= 28 && day <= 31) {
+        categories.push({
+            category: "New Year",
+            weight: 4
+        });
+    }
+
+    // HALLOWEEN
+    if (month === 10 && day >= 15 && day <= 31) {
+        categories.push({
+            category: "Halloween",
+            weight: day === 31 ? 999 : 3
+        });
+    }
+
+    // EASTER
+    const easter = getEasterSunday(today.getFullYear());
+
+    const easterStart = new Date(easter);
+    easterStart.setDate(easter.getDate() - 14);
+
+    if (today >= easterStart && today <= easter) {
+        categories.push({
+            category: "Easter",
+            weight: today.toDateString() === easter.toDateString() ? 999 : 3
+        });
+    }
+
+    // VALENTINE'S DAY
+    const valentines = new Date(today.getFullYear(), 1, 14);
+
+    const valentinesStart = new Date(valentines);
+    valentinesStart.setDate(valentines.getDate() - 14);
+
+    if (today >= valentinesStart && today <= valentines) {
+        categories.push({
+            category: "Valentine's Day",
+            weight: today.toDateString() === valentines.toDateString() ? 999 : 3
+        });
+    }
+
+    // THANKSGIVING
+    const thanksgiving = getThanksgiving(today.getFullYear());
+
+    const thanksgivingStart = new Date(thanksgiving);
+    thanksgivingStart.setDate(thanksgiving.getDate() - 14);
+
+    if (today >= thanksgivingStart && today <= thanksgiving) {
+        categories.push({
+            category: "Thanksgiving",
+            weight: today.toDateString() === thanksgiving.toDateString() ? 999 : 3
+        });
+    }
+
+    // WEDNESDAY
+    if (today.getDay() === 3) {
+        categories.push({
+            category: "Wednesday",
+            weight: 1
+        });
+    }
+
+    // TIME OF DAY
+    if (hour <= 11) {
+        categories.push({
+            category: "Morning",
+            weight: 1
+        });
+    } else if (hour <= 16) {
+        categories.push({
+            category: "Afternoon",
+            weight: 1
+        });
+    } else {
+        categories.push({
+            category: "Evening",
+            weight: 1
+        });
+    }
+
+    // LUNCH
+    if (hour >= 12 && hour <= 16) {
+        categories.push({
+            category: "Lunch",
+            weight: 1
+        });
+    }
+
+    return categories;
+}
+// =========================
+// Calculate Easter Sunday
+// =========================
+
+function getEasterSunday(year) {
+
+    const a = year % 19;
+    const b = Math.floor(year / 100);
+    const c = year % 100;
+    const d = Math.floor(b / 4);
+    const e = b % 4;
+    const f = Math.floor((b + 8) / 25);
+    const g = Math.floor((b - f + 1) / 3);
+    const h = (19 * a + b - d - g + 15) % 30;
+    const i = Math.floor(c / 4);
+    const k = c % 4;
+    const l = (32 + 2 * e + 2 * i - h - k) % 7;
+    const m = Math.floor((a + 11 * h + 22 * l) / 451);
+
+    const month = Math.floor((h + l - 7 * m + 114) / 31);
+    const day = ((h + l - 7 * m + 114) % 31) + 1;
+
+    return new Date(year, month - 1, day);
+}
+// =========================
+// Calculate Thanksgiving
+// =========================
+
+function getThanksgiving(year) {
+
+    const novemberFirst = new Date(year, 10, 1);
+    const firstThursday = 1 + ((4 - novemberFirst.getDay() + 7) % 7);
+
+    return new Date(year, 10, firstThursday + 21);
+}
+
+// =========================
+// Find Snoopy images in a category folder
+// =========================
+
+async function getSnoopyImages(category) {
+
+    const response = await fetch(
+        `https://api.github.com/repos/vhgibbs-ux/Family-dashboard/contents/images/snoopy/single/${category}`
+    );
+
+    const files = await response.json();
+
+    return files
+        .filter(file => file.name.toLowerCase().endsWith(".jpeg"))
+        .map(file => file.download_url);
+}
+// =========================
+// Test Snoopy folder
+// =========================
+
+console.log("SNOOPY TEST STARTING");
+
+getSnoopyImages("Summer").then(images => {
+    console.log("Summer Snoopy images:", images);
+});
+
+// =========================
 // Celebrations
 // =========================
 
