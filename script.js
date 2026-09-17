@@ -576,15 +576,40 @@ console.log("SNOOPY FILES:", files);
         .map(file => file.download_url);
 }
 // =========================
-// Test Snoopy folder
+// Choose Snoopy function
 // =========================
 
-getSnoopyImages("Summer").then(images => {
-    const snoopyImage = document.getElementById("snoopy-image");
-    const randomImage = images[Math.floor(Math.random() * images.length)];
-    snoopyImage.src = randomImage;
-});
+function chooseSnoopyCategory(categories) {
 
+    const totalWeight = categories.reduce(
+        (total, item) => total + item.weight,
+        0
+    );
+
+    let random = Math.random() * totalWeight;
+
+    for (const item of categories) {
+        random -= item.weight;
+
+        if (random < 0) {
+            return item.category;
+        }
+    }
+}
+async function loadSnoopy() {
+
+    const categories = getSnoopyCategoryWeights();
+    const category = chooseSnoopyCategory(categories);
+    const images = await getSnoopyImages(category);
+
+    if (images.length === 0) {
+        console.warn("No Snoopy images found for:", category);
+        return;
+    }
+
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    document.getElementById("snoopy-image").src = randomImage;
+}
 // =========================
 // Celebrations
 // =========================
