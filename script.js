@@ -793,6 +793,7 @@ setInterval(updateClock,1000);
 
 loadCalendar();
 loadWeather();
+loadSnoopy();
 // =========================
 // Tasks
 // =========================
