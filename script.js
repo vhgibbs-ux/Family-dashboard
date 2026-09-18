@@ -952,3 +952,27 @@ function prevScene() {
 }
 // Go left one scene arrow
 document.getElementById("prev-scene").addEventListener("click", prevScene);
+// =========================
+// SWIPE SCENE NAVIGATION
+// =========================
+
+let touchStartX = 0;
+
+document.addEventListener("touchstart", function(event) {
+    touchStartX = event.changedTouches[0].screenX;
+});
+
+document.addEventListener("touchend", function(event) {
+    const touchEndX = event.changedTouches[0].screenX;
+    const swipeDistance = touchEndX - touchStartX;
+
+    if (Math.abs(swipeDistance) < 50) {
+        return;
+    }
+
+    if (swipeDistance < 0) {
+        nextScene();
+    } else {
+        prevScene();
+    }
+});
