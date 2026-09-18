@@ -915,8 +915,19 @@ const scenes = [
     "today-scene",
     "week-scene",
     "radar-scene",
-    "food-scene"
+    "food-scene",
+     "snoopy-strip"
+
 ];
+
+const sceneTimings = [
+    30,  // Today
+    20,  // This Week
+    20,  // On the Radar
+    30,  // Food Planning
+    20   // Snoopy Strip
+];
+
 let currentScene = 0;
 function showScene() {
 
