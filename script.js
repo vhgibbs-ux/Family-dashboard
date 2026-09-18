@@ -928,6 +928,14 @@ const sceneTimings = [
     20   // Snoopy Strip
 ];
 
+let sceneTimer;
+function resetSceneTimer() {
+    clearTimeout(sceneTimer);
+
+    sceneTimer = setTimeout(() => {
+        nextScene();
+    }, sceneTimings[currentScene] * 1000);
+}
 let currentScene = 0;
 function showScene() {
 
@@ -938,7 +946,11 @@ function showScene() {
     });
 
     document.getElementById(scenes[currentScene]).style.display = "block";
+ resetSceneTimer();
+
 }
+
+
 function nextScene() {
 
     currentScene++;
@@ -963,6 +975,7 @@ function prevScene() {
 }
 // Go left one scene arrow
 document.getElementById("prev-scene").addEventListener("click", prevScene);
+showScene();
 // =========================
 // SWIPE SCENE NAVIGATION
 // =========================
