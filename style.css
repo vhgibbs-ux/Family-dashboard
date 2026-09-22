@@ -511,10 +511,30 @@ body.birthday #birthday-scene {
 .confetti-piece {
     position: absolute;
     top: -20px;
-    width: 10px;
-    height: 16px;
-    background: red;
+    width: 14px;
+    height: 14px;
+    background-color: var(--birthday-colour);
+    transform: rotate(-45deg);
     animation: confetti-fall linear infinite;
+}
+.confetti-piece::before,
+.confetti-piece::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background-color: inherit;
+    border-radius: 50%;
+}
+
+.confetti-piece::before {
+    top: -7px;
+    left: 0;
+}
+
+.confetti-piece::after {
+    top: 0;
+    left: 7px;
 }
 
 @keyframes confetti-fall {

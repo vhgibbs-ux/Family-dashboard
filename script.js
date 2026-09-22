@@ -31,7 +31,8 @@ const familyProfiles = {
 
         heart: "❤️",
 
-        colour: "#D9534F"
+        colour: "#D9534F",
+        birthday: { month: 4, day: 25 }
 
     },
 
@@ -43,7 +44,8 @@ const familyProfiles = {
 
         heart: "💙",
 
-        colour: "#4A90E2"
+        colour: "#4A90E2",
+        birthday: { month: 4, day: 10 }
 
     },
 
@@ -54,9 +56,8 @@ const familyProfiles = {
         displayName: "Elizabeth",
 
         heart: "🩵",
-
-        colour: "#7DD3FC"
-
+        colour: "#7DD3FC",
+        birthday: { month: 9, day: 20 }
     },
 
     Markus: {
@@ -67,8 +68,8 @@ const familyProfiles = {
 
         heart: "💛",
 
-        colour: "#F4C542"
-
+        colour: "#F4C542",
+        birthday: { month: 4, day: 16 }
     },
 
     Everyone: {
@@ -561,10 +562,9 @@ function getThanksgiving(year) {
 // Find Snoopy images in a category folder
 // =========================
 
-async function getSnoopyImages(category) {
+async function getSnoopyImages(category, type = "Single") {
 
-   const url = `https://api.github.com/repos/vhgibbs-ux/Family-dashboard/contents/images/Snoopy/Single/${category}`;
-
+   const url = `https://api.github.com/repos/vhgibbs-ux/Family-dashboard/contents/images/Snoopy/${type}/${category}`;
 console.log("SNOOPY URL:", url);
 
 const response = await fetch(url);
@@ -610,46 +610,65 @@ async function loadSnoopy() {
     const randomImage = images[Math.floor(Math.random() * images.length)];
     document.getElementById("snoopy-image").src = randomImage;
 }
+async function loadSnoopyStrip() {
+
+    const categories = getSnoopyCategoryWeights();
+    const category = chooseSnoopyCategory(categories);
+    const images = await getSnoopyImages(category, "Strips");
+
+    if (images.length === 0) {
+        console.warn("No Snoopy strips found for:", category);
+        return;
+    }
+
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    document.getElementById("snoopy-strip-image").src = randomImage;
+}
 // =========================
 // Celebrations
 // =========================
 
-const celebrations = [
 
-   {
-    month: 9,
-    day: 20,
 
-    person: "Elizabeth",
-
-    title: "🎉 Happy Birthday Elizabeth! 🎂",
-
-    message: "Have the most wonderful day ❤️"
-}
-
-];
-
-function checkCelebrations(){
+function checkCelebrations() {
 
     const today = new Date();
 
     const month = today.getMonth() + 1;
     const day = today.getDate();
 
-    const celebration = celebrations.find(event =>
-        event.month === month &&
-        event.day === day
-    );
-if(!celebration){
+const birthdayPerson = Object.keys(familyProfiles).find(person => {
 
+    const birthday = familyProfiles[person].birthday;
+
+    return birthday &&
+        birthday.month === month &&
+        birthday.day === day;
+});
+
+if (!birthdayPerson) {
     return;
-
 }
-document.body.classList.add("birthday");
+
+const profile = familyProfiles[birthdayPerson];
+
+const celebration = {
+    person: profile.displayName,
+    title: `🎉 Happy Birthday ${profile.displayName}! 🎂`,
+    message: `Have the most wonderful day ${profile.heart}`,
+    colour: profile.colour
+};
+
 showBirthdayScene(celebration);
+if (!scenes.includes("birthday-scene")) {
+    scenes.unshift("birthday-scene");
+    sceneTimings.unshift(30);
+}
+
+currentScene = 0;
 document.getElementById("message").innerHTML =
     `<strong>${celebration.title}</strong><br>
-     Today we're celebrating ${celebration.person}! ❤️<br>
+    Today we're celebrating ${celebration.person}! ${profile.heart}
      ${celebration.message}`;
 
 }
@@ -754,17 +773,20 @@ function showBirthdayScene(celebration) {
 
 // CONFETTI
 const confetti = document.getElementById("birthday-confetti");
+confetti.style.setProperty("--birthday-colour", celebration.colour);
 
 for (let i = 0; i < 80; i++) {
     const piece = document.createElement("span");
 
-    piece.className = "confetti-piece";
+piece.className = "confetti-piece";
+piece.style.backgroundColor = celebration.colour;
+console.log("CONFETTI COLOUR:", celebration.colour);
 
-    piece.style.left = Math.random() * 100 + "%";
-    piece.style.animationDelay = Math.random() * 3 + "s";
-    piece.style.animationDuration = 3 + Math.random() * 3 + "s";
+piece.style.left = Math.random() * 100 + "%";
+piece.style.animationDelay = Math.random() * 3 + "s";
+piece.style.animationDuration = 3 + Math.random() * 3 + "s";
 
-    confetti.appendChild(piece);
+confetti.appendChild(piece);
 }
 
 // SNOOPY
@@ -787,13 +809,13 @@ for (let i = 0; i < 80; i++) {
     }, 250);
 
 }
-checkCelebrations();
 
 setInterval(updateClock,1000);
 
 loadCalendar();
 loadWeather();
 loadSnoopy();
+loadSnoopyStrip();
 // =========================
 // Tasks
 // =========================
@@ -975,6 +997,7 @@ function prevScene() {
 }
 // Go left one scene arrow
 document.getElementById("prev-scene").addEventListener("click", prevScene);
+checkCelebrations();
 showScene();
 // =========================
 // SWIPE SCENE NAVIGATION
