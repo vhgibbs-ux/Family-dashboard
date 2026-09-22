@@ -572,7 +572,7 @@ const response = await fetch(url);
     const files = await response.json();
 console.log("SNOOPY FILES:", files);
     return files
-        .filter(file => file.name.toLowerCase().endsWith(".png"))
+        .filter(file => /\.(png|jpe?g)$/i.test(file.name))
         .map(file => file.download_url);
 }
 // =========================
@@ -614,8 +614,8 @@ async function loadSnoopyStrip() {
 
     const categories = getSnoopyCategoryWeights();
     const category = chooseSnoopyCategory(categories);
-    const images = await getSnoopyImages(category, "Strips");
-
+    const images = await getSnoopyImages(category, "Strip");
+    console.log("SNOOPY STRIP IMAGES:", images);
     if (images.length === 0) {
         console.warn("No Snoopy strips found for:", category);
         return;
