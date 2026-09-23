@@ -931,6 +931,107 @@ async function toggleTask(index){
 populateTaskOwnerMenu();
 loadTasks();
 // =========================
+// Shopping List
+// =========================
+
+let shoppingItems = [];
+
+function addShoppingItem() {
+
+    const input = document.getElementById("shoppingInput");
+
+    if (input.value.trim() === "") return;
+
+    shoppingItems.push({
+        text: input.value.trim(),
+        bought: false
+    });
+
+    input.value = "";
+
+    renderShoppingList();
+}
+
+function renderShoppingList() {
+
+    const list = document.getElementById("shoppingList");
+
+    list.innerHTML = "";
+
+    shoppingItems.forEach((item, index) => {
+
+        const li = document.createElement("li");
+
+        li.dataset.index = index;
+
+        li.innerHTML = `
+            <input
+                type="checkbox"
+                ${item.bought ? "checked" : ""}
+                onchange="shoppingItems[${index}].bought = this.checked">
+
+            <span>${item.text}</span>
+        `;
+
+        li.addEventListener("pointerdown", startShoppingDrag);
+
+        list.appendChild(li);
+
+    });
+
+}
+function startShoppingDrag(event) {
+
+    const draggedItem = event.currentTarget;
+
+    draggedItem.setPointerCapture(event.pointerId);
+
+    const startIndex = Number(draggedItem.dataset.index);
+
+    function moveShoppingItem(moveEvent) {
+
+        const items = [...document.querySelectorAll("#shoppingList li")];
+
+        const itemBelow = items.find(item => {
+
+            const box = item.getBoundingClientRect();
+
+            return moveEvent.clientY < box.top + box.height / 2;
+
+        });
+
+        if (itemBelow && itemBelow !== draggedItem) {
+
+            const newIndex = Number(itemBelow.dataset.index);
+
+            const [movedItem] = shoppingItems.splice(startIndex, 1);
+
+            shoppingItems.splice(newIndex, 0, movedItem);
+
+            renderShoppingList();
+
+        }
+
+    }
+
+    function stopShoppingDrag() {
+
+        draggedItem.releasePointerCapture(event.pointerId);
+
+        document.removeEventListener("pointermove", moveShoppingItem);
+        document.removeEventListener("pointerup", stopShoppingDrag);
+
+    }
+
+    document.addEventListener("pointermove", moveShoppingItem);
+    document.addEventListener("pointerup", stopShoppingDrag);
+
+}
+
+document
+    .getElementById("addShoppingItem")
+    .addEventListener("click", addShoppingItem);
+// =========================
 // Scene Navigation
 // =========================
 const scenes = [

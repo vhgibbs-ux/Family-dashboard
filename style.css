@@ -453,7 +453,14 @@ button:hover {
     grid-column: 2;
 }
 
+#shoppingList li {
+    cursor: grab;
+    touch-action: none;
+}
 
+#shoppingList li:active {
+    cursor: grabbing;
+}
 /* =========================================================
    SCENE 5 — SNOOPY STRIP
 ========================================================= */

@@ -177,15 +177,28 @@
 
     </div> <!-- closes meal planner panel -->
 
-    <!-- =========================
-         Shopping
-    ========================== -->
+ <!-- =========================
+     Shopping
+========================== -->
 
-    <div class="panel">
+<div class="panel shopping-panel">
 
-        <h2>🛒 Shopping List</h2>
+    <h2>🛒 Shopping List</h2>
 
-    </div> <!-- closes shopping panel -->
+    <div class="shopping-input">
+        <input
+            type="text"
+            id="shoppingInput"
+            placeholder="Add an item...">
+
+        <button id="addShoppingItem">
+            Add
+        </button>
+    </div>
+
+    <ul id="shoppingList"></ul>
+
+</div> <!-- closes shopping panel -->
 
 
 </div> <!-- closes food-scene -->
