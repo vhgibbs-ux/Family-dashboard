@@ -14,9 +14,33 @@ console.log("SCRIPT VERSION = SEPT 10 TEST");
 // ================================
 
 const GRUBBINS = {
-  CORE_URL: "https://grubbins-core.v-h-gibbs.workers.dev",
-  API_KEY: "ErasmusFamilj04"
+  CORE_URL: "https://grubbins-core.v-h-gibbs.workers.dev"
 };
+function getGrubbinsPassword() {
+
+    return sessionStorage.getItem("grubbinsPassword");
+
+}
+document
+    .getElementById("grubbins-login-button")
+    .addEventListener("click", () => {
+
+        const password =
+            document.getElementById("grubbins-password").value.trim();
+
+        if (!password) return;
+
+        sessionStorage.setItem(
+            "grubbinsPassword",
+            password
+        );
+
+        document.getElementById("grubbins-login").style.display = "none";
+
+        loadCalendar();
+
+    });
+
 // ================================
 // Family Profiles
 // ================================
@@ -124,7 +148,7 @@ async function loadCalendar() {
             `${GRUBBINS.CORE_URL}/calendar`,
             {
                 headers: {
-                    "X-Grubbins-Key": GRUBBINS.API_KEY
+                 "X-Grubbins-Key": getGrubbinsPassword()
                 }
             }
         );
@@ -812,7 +836,11 @@ confetti.appendChild(piece);
 
 setInterval(updateClock,1000);
 
-loadCalendar();
+if (sessionStorage.getItem("grubbinsPassword")) {
+    loadCalendar();
+} else {
+    document.getElementById("grubbins-login").style.display = "block";
+}
 loadWeather();
 loadSnoopy();
 loadSnoopyStrip();
@@ -830,7 +858,7 @@ async function loadTasks() {
 
         {
             headers:{
-                "X-Grubbins-Key":GRUBBINS.API_KEY
+            "X-Grubbins-Key": getGrubbinsPassword()
             }
         }
 
@@ -853,7 +881,7 @@ async function saveTasks(){
 
             headers:{
                 "Content-Type":"application/json",
-                "X-Grubbins-Key":GRUBBINS.API_KEY
+            "X-Grubbins-Key": getGrubbinsPassword()
             },
 
             body:JSON.stringify(tasks)
@@ -944,7 +972,7 @@ function addShoppingItem() {
 
     shoppingItems.push({
         text: input.value.trim(),
-        bought: false
+        bought: false   
     });
 
     input.value = "";
