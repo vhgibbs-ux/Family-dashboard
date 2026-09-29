@@ -964,77 +964,284 @@ loadTasks();
 
 let shoppingItems = [];
 
+
+// =========================
+// LOAD SHOPPING LIST
+// =========================
+
+async function loadShoppingList() {
+
+    const password = getGrubbinsPassword();
+
+    if (!password) return;
+
+    try {
+
+        const response = await fetch(
+            `${GRUBBINS.CORE_URL}/shopping`,
+            {
+                headers: {
+                    "X-Grubbins-Key": password
+                }
+            }
+        );
+
+        if (!response.ok) {
+
+            console.error(
+                "Shopping load error:",
+                response.status
+            );
+
+            return;
+        }
+
+        shoppingItems =
+            await response.json();
+
+        renderShoppingList();
+
+    } catch (error) {
+
+        console.error(
+            "Shopping load failed:",
+            error
+        );
+
+    }
+
+}
+
+
+// =========================
+// SAVE SHOPPING LIST
+// =========================
+
+async function saveShoppingList() {
+
+    const password = getGrubbinsPassword();
+
+    if (!password) return;
+
+    try {
+
+        const response = await fetch(
+            `${GRUBBINS.CORE_URL}/shopping`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Grubbins-Key": password
+                },
+
+                body: JSON.stringify(
+                    shoppingItems
+                )
+            }
+        );
+
+        if (!response.ok) {
+
+            console.error(
+                "Shopping save error:",
+                response.status
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Shopping save failed:",
+            error
+        );
+
+    }
+
+}
+
+
+// =========================
+// ADD SHOPPING ITEM
+// =========================
+
 function addShoppingItem() {
 
-    const input = document.getElementById("shoppingInput");
+    const input =
+        document.getElementById(
+            "shoppingInput"
+        );
 
-    if (input.value.trim() === "") return;
+    if (
+        input.value.trim() === ""
+    ) return;
 
     shoppingItems.push({
+
         text: input.value.trim(),
-        bought: false   
+        bought: false
+
     });
 
     input.value = "";
 
     renderShoppingList();
+
+    saveShoppingList();
+
 }
+
+
+// =========================
+// RENDER SHOPPING LIST
+// =========================
 
 function renderShoppingList() {
 
-    const list = document.getElementById("shoppingList");
+    const list =
+        document.getElementById(
+            "shoppingList"
+        );
 
     list.innerHTML = "";
 
-    shoppingItems.forEach((item, index) => {
+    shoppingItems.forEach(
+        (item, index) => {
 
-        const li = document.createElement("li");
+            const li =
+                document.createElement("li");
 
-        li.dataset.index = index;
+            li.dataset.index = index;
 
-        li.innerHTML = `
-            <input
-                type="checkbox"
-                ${item.bought ? "checked" : ""}
-                onchange="shoppingItems[${index}].bought = this.checked">
+            const checkbox =
+                document.createElement(
+                    "input"
+                );
 
-            <span>${item.text}</span>
-        `;
+            checkbox.type = "checkbox";
+            checkbox.checked =
+                item.bought;
 
-        li.addEventListener("pointerdown", startShoppingDrag);
+            checkbox.addEventListener(
+                "change",
+                () => {
 
-        list.appendChild(li);
+                    item.bought =
+                        checkbox.checked;
 
-    });
+                    saveShoppingList();
+
+                }
+            );
+
+            const span =
+                document.createElement(
+                    "span"
+                );
+
+            span.textContent =
+                item.text;
+
+            li.appendChild(checkbox);
+            li.appendChild(span);
+
+            li.addEventListener(
+                "pointerdown",
+                startShoppingDrag
+            );
+
+            list.appendChild(li);
+
+        }
+    );
 
 }
+
+
+// =========================
+// DRAG SHOPPING ITEM
+// =========================
+
 function startShoppingDrag(event) {
 
-    const draggedItem = event.currentTarget;
+    // Don't start dragging when
+    // the shopper taps the checkbox.
 
-    draggedItem.setPointerCapture(event.pointerId);
+    if (
+        event.target.tagName === "INPUT"
+    ) {
+        return;
+    }
 
-    const startIndex = Number(draggedItem.dataset.index);
+    const draggedItem =
+        event.currentTarget;
 
-    function moveShoppingItem(moveEvent) {
+    draggedItem.setPointerCapture(
+        event.pointerId
+    );
 
-        const items = [...document.querySelectorAll("#shoppingList li")];
+    let currentIndex =
+        Number(
+            draggedItem.dataset.index
+        );
 
-        const itemBelow = items.find(item => {
 
-            const box = item.getBoundingClientRect();
+    function moveShoppingItem(
+        moveEvent
+    ) {
 
-            return moveEvent.clientY < box.top + box.height / 2;
+        const items = [
+            ...document.querySelectorAll(
+                "#shoppingList li"
+            )
+        ];
 
-        });
+        const itemBelow =
+            items.find(item => {
 
-        if (itemBelow && itemBelow !== draggedItem) {
+                if (
+                    item === draggedItem
+                ) {
+                    return false;
+                }
 
-            const newIndex = Number(itemBelow.dataset.index);
+                const box =
+                    item.getBoundingClientRect();
 
-            const [movedItem] = shoppingItems.splice(startIndex, 1);
+                return (
+                    moveEvent.clientY <
+                    box.top +
+                    box.height / 2
+                );
 
-            shoppingItems.splice(newIndex, 0, movedItem);
+            });
+
+
+        if (
+            itemBelow &&
+            itemBelow !== draggedItem
+        ) {
+
+            const newIndex =
+                Number(
+                    itemBelow.dataset.index
+                );
+
+            const [movedItem] =
+                shoppingItems.splice(
+                    currentIndex,
+                    1
+                );
+
+            shoppingItems.splice(
+                newIndex,
+                0,
+                movedItem
+            );
+
+            currentIndex =
+                newIndex;
 
             renderShoppingList();
 
@@ -1042,23 +1249,60 @@ function startShoppingDrag(event) {
 
     }
 
+
     function stopShoppingDrag() {
 
-        draggedItem.releasePointerCapture(event.pointerId);
+        draggedItem.releasePointerCapture(
+            event.pointerId
+        );
 
-        document.removeEventListener("pointermove", moveShoppingItem);
-        document.removeEventListener("pointerup", stopShoppingDrag);
+        document.removeEventListener(
+            "pointermove",
+            moveShoppingItem
+        );
+
+        document.removeEventListener(
+            "pointerup",
+            stopShoppingDrag
+        );
+
+        saveShoppingList();
 
     }
 
-    document.addEventListener("pointermove", moveShoppingItem);
-    document.addEventListener("pointerup", stopShoppingDrag);
+
+    document.addEventListener(
+        "pointermove",
+        moveShoppingItem
+    );
+
+    document.addEventListener(
+        "pointerup",
+        stopShoppingDrag
+    );
 
 }
 
+
+// =========================
+// SHOPPING LIST BUTTON
+// =========================
+
 document
-    .getElementById("addShoppingItem")
-    .addEventListener("click", addShoppingItem);
+    .getElementById(
+        "addShoppingItem"
+    )
+    .addEventListener(
+        "click",
+        addShoppingItem
+    );
+
+
+// =========================
+// LOAD SHARED LIST
+// =========================
+
+loadShoppingList();
 // =========================
 // Scene Navigation
 // =========================
