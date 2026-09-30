@@ -18,7 +18,7 @@ const GRUBBINS = {
 };
 function getGrubbinsPassword() {
 
-    return sessionStorage.getItem("grubbinsPassword");
+    return localStorage.getItem("grubbinsPassword");
 
 }
 document
@@ -30,7 +30,7 @@ document
 
         if (!password) return;
 
-        sessionStorage.setItem(
+        localStorage.setItem(
             "grubbinsPassword",
             password
         );
