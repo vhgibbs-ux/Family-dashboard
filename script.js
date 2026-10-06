@@ -122,6 +122,29 @@ function getProfile(name) {
     return familyProfiles.Everyone;
 
 }
+// ================================
+// Important Dates spreadsheet
+// ================================
+
+async function loadImportantDates() {
+
+    const response = await fetch(
+        "https://raw.githubusercontent.com/vhgibbs-ux/Family-dashboard/main/Grubbins-data.xlsx"
+    );
+
+    const data = await response.arrayBuffer();
+
+    const workbook = XLSX.read(data, {
+        type: "array"
+    });
+
+    const sheet = workbook.Sheets["Important Dates"];
+
+    const dates = XLSX.utils.sheet_to_json(sheet);
+
+    console.log("Important Dates loaded:", dates);
+
+}
 
 function populateTaskOwnerMenu() {
     const select = document.getElementById("taskOwner");
@@ -1396,3 +1419,4 @@ document.addEventListener("touchend", function(event) {
         prevScene();
     }
 });
+loadImportantDates();
