@@ -141,19 +141,22 @@ async function loadImportantDates() {
     const sheet = workbook.Sheets["Anniversaries"];
 
     const dates = XLSX.utils.sheet_to_json(sheet);
+    const importantDates = dates.map(row => {
+    const date = XLSX.SSF.parse_date_code(row.Date);
+
+    return {
+        personId: row["Person ID"],
+        displayName: row["Display Name"],
+        date: new Date(date.y, date.m - 1, date.d),
+        event: row.Event
+    };
+});
+
+console.log("Important Dates parsed:", importantDates);
 
    console.log("Important Dates loaded:", dates);
 console.log("First Important Date row:", dates[0]);
-const ali = dates.find(row => row["Person ID"] === "ali");
 
-if (ali) {
-    const dob = XLSX.SSF.parse_date_code(ali.Date);
-
-    console.log(
-        "Ali's converted DOB:",
-        `${dob.d}/${dob.m}/${dob.y}`
-    );
-}
 }
 
 function populateTaskOwnerMenu() {
