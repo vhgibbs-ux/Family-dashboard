@@ -47,7 +47,7 @@ document
 
 const familyProfiles = {
 
-    Victoria: {
+    victoriaTruth: {
 
         aliases: ["Victoria", "Mum", "Toria", "Mummm"],
 
@@ -60,7 +60,7 @@ const familyProfiles = {
 
     },
 
-    Dave: {
+    daveTruth: {
 
         aliases: ["Dave", "Dad"],
 
@@ -73,7 +73,7 @@ const familyProfiles = {
 
     },
 
-    Elizabeth: {
+    elizabethTruth: {
 
         aliases: ["Elizabeth", "Bean"],
 
@@ -84,7 +84,7 @@ const familyProfiles = {
         birthday: { month: 9, day: 20 }
     },
 
-    Markus: {
+    markusTruth: {
 
         aliases: ["Markus", "Moo", "Goose", "Goosey"],
 
@@ -111,16 +111,18 @@ const familyProfiles = {
 };
 function getProfile(name) {
 
-    for (const profile of Object.values(familyProfiles)) {
+    for (const [key, profile] of Object.entries(familyProfiles)) {
 
-        if (profile.aliases.includes(name)) {
+        if (
+            key === name ||
+            profile.aliases.includes(name)
+        ) {
             return profile;
         }
 
     }
 
     return familyProfiles.Everyone;
-
 }
 // ================================
 // Important Dates spreadsheet
@@ -151,13 +153,122 @@ async function loadImportantDates() {
         event: row.Event
     };
 });
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+// ================================
+// Prepare Important Dates for display
+// ================================
+const upcomingDates = importantDates
+    .map(item => {
+
+        const nextOccurrence = new Date(
+            today.getFullYear(),
+            item.date.getMonth(),
+            item.date.getDate()
+        );
+
+        if (nextOccurrence < today) {
+            nextOccurrence.setFullYear(
+                today.getFullYear() + 1
+            );
+        }
+
+        const daysAway =
+            (nextOccurrence - today) /
+            (1000 * 60 * 60 * 24);
+
+        if (daysAway <= 21) {
+            return {
+                ...item,
+                nextOccurrence: nextOccurrence
+            };
+        }
+
+        return null;
+    })
+   .filter(item => item !== null)
+        .sort((a, b) => a.nextOccurrence - b.nextOccurrence);
+
+console.log("Upcoming Important Dates:", upcomingDates
+);
 
 console.log("Important Dates parsed:", importantDates);
 
-   console.log("Important Dates loaded:", dates);
+console.log("Important Dates loaded:", dates);
 console.log("First Important Date row:", dates[0]);
 
-}
+console.log("First upcoming date:",upcomingDates[0]);
+    const displayDates = upcomingDates.map(item => {
+
+    const day = item.nextOccurrence.getDate();
+
+    const month = item.nextOccurrence.toLocaleDateString("en-GB", {
+        month: "long"
+    });
+const profile = getProfile(item.personId);
+
+const name = profile !== familyProfiles.Everyone
+    ? profile.displayName
+    : item.displayName;
+    return {
+    name: name,
+    dateText: `${day} ${month}`,
+    nextOccurrence: item.nextOccurrence,
+    event: item.event,
+    age: item.event === "Birthday" && item.date.getFullYear() !== 1900
+        ? item.nextOccurrence.getFullYear() - item.date.getFullYear()
+        : null
+};
+});
+
+const birthdaysList = document.getElementById("birthdays");
+
+if (birthdaysList) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const isToday = item =>
+        item.nextOccurrence.toDateString() === today.toDateString();
+
+    // Today's celebrations first, then upcoming dates in order.
+    displayDates.sort((a, b) => {
+        if (isToday(a) && !isToday(b)) return -1;
+        if (!isToday(a) && isToday(b)) return 1;
+        return a.nextOccurrence - b.nextOccurrence;
+    });
+
+    const hasCelebration = displayDates.some(isToday);
+
+    birthdaysList.innerHTML = `
+        ${hasCelebration ? `
+            <li class="celebration-banner">
+                🎂 🥂 🎉 🥂 🎂
+            </li>
+        ` : ""}
+        ${displayDates.map(item => {
+            const ageText = item.age !== null
+                ? ` (${item.age})`
+                : "";
+
+            return `
+                <li class="${isToday(item) ? "birthday-today" : ""}">
+                    ${item.dateText} – ${item.name}${ageText}
+                    <span> — ${item.event}</span>
+                </li>
+            `;
+        }).join("")}
+      `;
+} // closes if (birthdaysList)
+
+// ================================
+// Important Dates — end
+// ================================
+} // closes loadImportantDates
+
+// ================================
+// Populate task owner menu
+// ================================
 
 function populateTaskOwnerMenu() {
     const select = document.getElementById("taskOwner");
@@ -172,10 +283,9 @@ function populateTaskOwnerMenu() {
         .join("");
 }
 
-// =========================
+// ================================
 // Calendar Today
-// =========================
-
+// ================================
 async function loadCalendar() {
 
     try {
@@ -479,7 +589,7 @@ function getSnoopyCategoryWeights() {
         });
     }
 
-        // =========================
+    // =========================
     // SPECIAL DAYS
     // =========================
 

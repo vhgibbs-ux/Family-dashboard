@@ -626,3 +626,16 @@ body.birthday #birthday-scene {
         transform: translateY(100vh) rotate(720deg);
     }
 }
+/* -------------------------
+   Important Dates — celebrations
+------------------------- */
+
+.birthday-today {
+    font-weight: bold;
+}
+
+.celebration-banner {
+    text-align: center;
+    font-size: 1.3em;
+    margin-bottom: 8px;
+}
