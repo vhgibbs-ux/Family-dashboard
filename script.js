@@ -1011,6 +1011,7 @@ async function loadTasks() {
     );
 
     tasks = await response.json();
+console.log("Tasks returned from server:", tasks);
 
     renderTasks();
 
@@ -1116,7 +1117,8 @@ let shoppingItems = [];
 // =========================
 
 async function loadShoppingList() {
-
+console.log("Shopping list loader started");
+console.log("Shopping password available:", Boolean(getGrubbinsPassword()));
     const password = getGrubbinsPassword();
 
     if (!password) return;
@@ -1142,8 +1144,8 @@ async function loadShoppingList() {
             return;
         }
 
-        shoppingItems =
-            await response.json();
+        shoppingItems = await response.json();
+console.log("Shopping list returned from server:", shoppingItems);
 
         renderShoppingList();
 
@@ -1254,7 +1256,7 @@ function renderShoppingList() {
 
     shoppingItems.forEach(
         (item, index) => {
-
+if (item.bought) return;
             const li =
                 document.createElement("li");
 
@@ -1543,3 +1545,145 @@ document.addEventListener("touchend", function(event) {
     }
 });
 loadImportantDates();
+/* =========================================================
+   MEAL PLANNER — SHOW REMAINING DAYS
+========================================================= */
+
+const showFullMealWeek = document.getElementById("showFullMealWeek");
+const mealDayRows = document.querySelectorAll(
+    "#food-scene .meal-day-row"
+);
+
+function updateMealWeekVisibility() {
+    const today = new Date().getDay();
+
+    // JavaScript uses Sunday = 0; we want Monday = 0.
+    const todayIndex = (today + 6) % 7;
+
+    mealDayRows.forEach(row => {
+        const day = row.dataset.day;
+
+        const dayIndex = [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ].indexOf(day);
+
+        row.style.display =
+            showFullMealWeek.checked || dayIndex >= todayIndex
+                ? "grid"
+                : "none";
+    });
+}
+
+if (showFullMealWeek) {
+    showFullMealWeek.addEventListener(
+        "change",
+        updateMealWeekVisibility
+    );
+
+    updateMealWeekVisibility();
+}
+/* =========================================================
+   MEAL PLANNER — SAVE MEALS
+========================================================= */
+
+const mealInputs = document.querySelectorAll(
+    "#food-scene .meal-day-row input"
+);
+
+const mealStorageKey = "grubbinsMeals";
+
+// Restore previously saved meals
+function loadMealPlan() {
+    const savedMeals = JSON.parse(
+        localStorage.getItem(mealStorageKey) || "{}"
+    );
+
+    mealInputs.forEach(input => {
+        if (savedMeals[input.id] !== undefined) {
+            input.value = savedMeals[input.id];
+        }
+    });
+}
+
+// Save all seven meals
+function saveMealPlan() {
+    const meals = {};
+
+    mealInputs.forEach(input => {
+        meals[input.id] = input.value;
+    });
+
+    localStorage.setItem(
+        mealStorageKey,
+        JSON.stringify(meals)
+    );
+}
+
+// Save automatically whenever a meal changes
+mealInputs.forEach(input => {
+    input.addEventListener("input", saveMealPlan);
+});
+
+// Load meals when Grubbins opens
+loadMealPlan();
+/* =========================================================
+   MEAL PLANNER — DRAG MEALS BETWEEN DAYS
+========================================================= */
+
+let draggedMealInput = null;
+
+mealInputs.forEach(input => {
+    input.draggable = true;
+
+    input.addEventListener("dragstart", event => {
+        if (!input.value.trim()) {
+            event.preventDefault();
+            return;
+        }
+
+        draggedMealInput = input;
+        event.dataTransfer.setData("text/plain", input.value);
+        event.dataTransfer.effectAllowed = "move";
+    });
+
+    input.addEventListener("dragend", () => {
+        draggedMealInput = null;
+    });
+});
+
+document.querySelectorAll("#food-scene .meal-day-row").forEach(row => {
+    row.addEventListener("dragover", event => {
+        if (draggedMealInput && draggedMealInput !== row.querySelector("input")) {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+        }
+    });
+
+    row.addEventListener("drop", event => {
+        event.preventDefault();
+
+        const targetInput = row.querySelector("input");
+
+        if (
+            !draggedMealInput ||
+            !targetInput ||
+            draggedMealInput === targetInput
+        ) {
+            return;
+        }
+
+        const draggedValue = draggedMealInput.value;
+        const targetValue = targetInput.value;
+
+        targetInput.value = draggedValue;
+        draggedMealInput.value = targetValue;
+
+        saveMealPlan();
+    });
+});

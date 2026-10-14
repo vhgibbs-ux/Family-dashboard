@@ -466,8 +466,7 @@ button:hover {
 ========================================================= */
 
 /*
-   Keep the whole Snoopy strip visible on screen
-   so scrolling is minimised.
+   Keep the whole Snoopy strip visible on screen so scrolling is minimised.
 */
 
 #snoopy-strip {
@@ -638,4 +637,129 @@ body.birthday #birthday-scene {
     text-align: center;
     font-size: 1.3em;
     margin-bottom: 8px;
+}
+/* =========================================================
+   MEAL PLANNER — INITIAL LAYOUT
+========================================================= */
+
+#food-scene .meal-planner-panel {
+    grid-column: 1;
+}
+
+.meal-planner-entry {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+#mealInput {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.meal-planner-layout {
+    display: grid;
+    grid-template-columns: minmax(140px, 1fr) minmax(0, 3fr);
+    gap: 20px;
+}
+
+.meal-bank,
+.meal-day {
+    background: #f5f8fb;
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.meal-bank h3,
+.meal-day h3 {
+    margin-top: 0;
+    color: #4b6584;
+}
+
+.meal-week {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.meal-dropzone,
+#mealBank {
+    list-style: none;
+    padding: 8px;
+    margin: 0;
+    min-height: 45px;
+    border: 1px dashed #c5d2df;
+    border-radius: 8px;
+}
+
+#food-scene .shopping-panel {
+    grid-column: 1 / 3;
+}
+
+/* Narrow screens */
+@media (max-width: 600px) {
+    .meal-planner-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .meal-week {
+        grid-template-columns: 1fr;
+    }
+}
+/* =========================================================
+   MEAL PLANNER — ALIGNED DAY ROWS
+========================================================= */
+
+#food-scene .meal-week {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#food-scene .meal-day-row {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+}
+
+#food-scene .meal-day-row label {
+    font-weight: 600;
+    color: #4b6584;
+}
+
+#food-scene .meal-day-row input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #c5d2df;
+    border-radius: 8px;
+    font: inherit;
+}
+
+/* Make the day labels a little narrower on phones */
+@media (max-width: 600px) {
+    #food-scene .meal-day-row {
+        grid-template-columns: 85px minmax(0, 1fr);
+        gap: 8px;
+    }
+}
+/* Meal Planner — full-week toggle */
+
+.meal-week-controls {
+    margin-bottom: 12px;
+}
+
+.meal-week-controls label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
 }
