@@ -1598,40 +1598,142 @@ const mealInputs = document.querySelectorAll(
 
 const mealStorageKey = "grubbinsMeals";
 
-// Restore previously saved meals
-function loadMealPlan() {
-    const savedMeals = JSON.parse(
+
+let mealPlan = {};
+
+async function loadMealPlan() {
+    const localMeals = JSON.parse(
         localStorage.getItem(mealStorageKey) || "{}"
     );
 
-    mealInputs.forEach(input => {
-        if (savedMeals[input.id] !== undefined) {
-            input.value = savedMeals[input.id];
+    try {
+        const response = await fetch(
+            `${GRUBBINS.CORE_URL}/meals`,
+            {
+                headers: {
+                    "X-Grubbins-Key": getGrubbinsPassword()
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Meal load failed: ${response.status}`);
         }
-    });
+
+        const sharedMeals = await response.json();
+
+        if (Object.keys(sharedMeals).length > 0) {
+            mealPlan = sharedMeals;
+        } else {
+            mealPlan = localMeals;
+            await saveMealPlan();
+        }
+
+        mealInputs.forEach(input => {
+            if (mealPlan[input.id] !== undefined) {
+                input.value = mealPlan[input.id];
+            }
+        });
+
+        localStorage.setItem(
+            mealStorageKey,
+            JSON.stringify(mealPlan)
+        );
+
+    } catch (error) {
+        console.error("Could not load shared meals:", error);
+
+        // Keep the existing local meals available if the server is unavailable.
+        mealPlan = localMeals;
+
+        mealInputs.forEach(input => {
+            if (mealPlan[input.id] !== undefined) {
+                input.value = mealPlan[input.id];
+            }
+        });
+    }
 }
 
-// Save all seven meals
-function saveMealPlan() {
-    const meals = {};
+async function saveMealPlan() {
+    mealPlan = {};
 
     mealInputs.forEach(input => {
-        meals[input.id] = input.value;
+        mealPlan[input.id] = input.value;
     });
 
+    // Keep a local backup as well.
     localStorage.setItem(
         mealStorageKey,
-        JSON.stringify(meals)
+        JSON.stringify(mealPlan)
     );
+
+    try {
+        const response = await fetch(
+            `${GRUBBINS.CORE_URL}/meals`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Grubbins-Key": getGrubbinsPassword()
+                },
+                body: JSON.stringify(mealPlan)
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Meal save failed: ${response.status}`);
+        }
+    } catch (error) {
+        console.error("Could not save shared meals:", error);
+    }
 }
 
-// Save automatically whenever a meal changes
 mealInputs.forEach(input => {
     input.addEventListener("input", saveMealPlan);
 });
 
-// Load meals when Grubbins opens
 loadMealPlan();
+
+/* =========================================================
+   WELCOME — TONIGHT'S DINNER
+========================================================= */
+
+function updateTonightDinner() {
+    const dinnerDisplay = document.getElementById("today-dinner-meal");
+
+    if (!dinnerDisplay) return;
+
+    // JavaScript uses Sunday = 0, Monday = 1, etc.
+    const dayNames = [
+        "sunday",
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday"
+    ];
+
+    const today = dayNames[new Date().getDay()];
+    const mealInputId = `meal-${today}`;
+
+    const savedMeals = JSON.parse(
+        localStorage.getItem("grubbinsMeals") || "{}"
+    );
+
+    const tonight = savedMeals[mealInputId]?.trim();
+
+    dinnerDisplay.textContent = tonight || "Nothing planned yet";
+}
+
+// Show tonight's dinner when Grubbins opens
+updateTonightDinner();
+
+// Update the welcome panel when a meal is edited
+mealInputs.forEach(input => {
+    input.addEventListener("input", updateTonightDinner);
+});
+
 /* =========================================================
    MEAL PLANNER — DRAG MEALS BETWEEN DAYS
 ========================================================= */
