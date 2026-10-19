@@ -1,4 +1,4 @@
-console.log("SCRIPT VERSION = MEAL SYNC TEST);
+console.log("SCRIPT VERSION = MEAL SYNC TEST");
 /* ==========================================
    Grubbins Family Dashboard
    script.js
