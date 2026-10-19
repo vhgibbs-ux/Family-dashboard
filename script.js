@@ -1601,6 +1601,7 @@ const mealStorageKey = "grubbinsMeals";
 
 let mealPlan = {};
 
+
 async function loadMealPlan() {
     const localMeals = JSON.parse(
         localStorage.getItem(mealStorageKey) || "{}"
@@ -1621,14 +1622,12 @@ async function loadMealPlan() {
         }
 
         const sharedMeals = await response.json();
+        const hasSharedMeals = Object.keys(sharedMeals).length > 0;
 
-        if (Object.keys(sharedMeals).length > 0) {
-            mealPlan = sharedMeals;
-        } else {
-            mealPlan = localMeals;
-            await saveMealPlan();
-        }
+        // Prefer shared meals; otherwise preserve this device's meals.
+        mealPlan = hasSharedMeals ? sharedMeals : localMeals;
 
+        // Fill the inputs BEFORE attempting to migrate local meals.
         mealInputs.forEach(input => {
             if (mealPlan[input.id] !== undefined) {
                 input.value = mealPlan[input.id];
@@ -1640,10 +1639,15 @@ async function loadMealPlan() {
             JSON.stringify(mealPlan)
         );
 
+        // Migrate existing local meals only if the shared store is empty.
+        if (!hasSharedMeals && Object.keys(localMeals).length > 0) {
+            await saveMealPlan();
+        }
+
     } catch (error) {
         console.error("Could not load shared meals:", error);
 
-        // Keep the existing local meals available if the server is unavailable.
+        // Fall back to this device's saved meals.
         mealPlan = localMeals;
 
         mealInputs.forEach(input => {
@@ -1653,6 +1657,7 @@ async function loadMealPlan() {
         });
     }
 }
+
 
 async function saveMealPlan() {
     mealPlan = {};
