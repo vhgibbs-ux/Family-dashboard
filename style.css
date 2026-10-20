@@ -778,9 +778,43 @@ body.birthday #birthday-scene {
    PHONE LAYOUT
 ========================================================= */
 
+
+/* Welcome panel — phone layout */
 @media (max-width: 600px) {
     #today-scene .welcome {
-        grid-template-columns: 1fr;
+        grid-column: 1 / -1;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
         min-height: auto;
+    }
+
+    #today-scene .welcome-left-column,
+    #today-scene .status-content,
+    #today-scene .status-art {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+ #today-scene .status-content {
+    grid-row: 1;
+}
+
+#today-scene .welcome-left-column {
+    grid-row: 2;
+}
+
+#today-scene .status-art {
+    grid-row: 3;
+}
+
+    #today-scene .status-art {
+        height: auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    #today-scene .status-art img {
+        max-width: 120px;
     }
 }

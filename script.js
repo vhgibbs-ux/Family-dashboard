@@ -1,4 +1,4 @@
-console.log("SCRIPT VERSION = MEAL SYNC TEST");
+console.log("SCRIPT VERSION = SESSION 9 - SHARED MEALS");
 /* ==========================================
    Grubbins Family Dashboard
    script.js
@@ -1600,7 +1600,6 @@ const mealStorageKey = "grubbinsMeals";
 
 
 let mealPlan = {};
-
 
 
 async function loadMealPlan() {
