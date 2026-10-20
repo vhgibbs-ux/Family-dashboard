@@ -774,3 +774,13 @@ body.birthday #birthday-scene {
     cursor: pointer;
     font-size: 14px;
 }
+/* =========================================================
+   PHONE LAYOUT
+========================================================= */
+
+@media (max-width: 600px) {
+    #today-scene .welcome {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+}
