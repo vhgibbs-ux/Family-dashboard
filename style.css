@@ -781,6 +781,16 @@ body.birthday #birthday-scene {
 
 /* Welcome panel — phone layout */
 @media (max-width: 600px) {
+        /* Stack the main panels on phones */
+    #today-scene {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #today-scene .today-panel,
+    #today-scene .missions {
+        grid-column: 1;
+        min-width: 0;
+    }
     #today-scene .welcome {
         grid-column: 1 / -1;
         grid-template-columns: minmax(0, 1fr);
